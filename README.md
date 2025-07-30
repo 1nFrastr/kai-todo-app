@@ -33,7 +33,7 @@
 ## 📦 项目结构
 
 ```
-kai-project-demo/
+kai-todo-app/
 ├── backend/                 # Django 后端
 │   ├── todo/               # Todo 应用
 │   │   ├── models.py       # 数据模型
@@ -69,8 +69,8 @@ kai-project-demo/
 
 1. 克隆项目：
 ```bash
-git clone https://github.com/your-username/kai-project-demo.git
-cd kai-project-demo
+git clone https://github.com/1nFrastr/kai-todo-app.git
+cd kai-todo-app
 ```
 
 2. 进入后端目录：
