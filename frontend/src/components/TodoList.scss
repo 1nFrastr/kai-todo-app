@@ -1,0 +1,15 @@
+.todo-list {
+  margin-top: 2rem;
+}
+
+.todo-list-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+
+  p {
+    margin: 0;
+  }
+}
