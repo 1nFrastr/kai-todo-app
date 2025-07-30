@@ -1,4 +1,4 @@
-# Todo List 全栈项目
+# kai-todo-app
 
 一个现代化的全栈 Todo List 应用，支持多语言和暗黑模式，使用 Django REST Framework 作为后端，React + TypeScript 作为前端。
 
