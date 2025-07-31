@@ -48,9 +48,20 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
   /**
    * Handle clear configuration
    */
-  const handleClear = () => {
+  const handleClear = async () => {
     if (window.confirm(t('deleteConfirm'))) {
-      clearConfig();
+      try {
+        clearConfig();
+        
+        // Show success message
+        // alert(t('aiConfig.clearSuccess'));
+        
+        // Close modal after successful clear
+        onClose();
+      } catch (error) {
+        console.error('Failed to clear config:', error);
+        alert(t('aiConfig.clearError'));
+      }
     }
   };
 

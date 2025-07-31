@@ -99,10 +99,11 @@ const resources = {
         
         // Success messages
         saveSuccess: "Configuration saved successfully",
-        clearSuccess: "Configuration cleared",
+        clearSuccess: "Configuration cleared successfully",
         
         // Error messages
         saveError: "Failed to save configuration",
+        clearError: "Failed to clear configuration",
         testError: "Connection test failed",
         networkError: "Network error",
         timeoutError: "Connection timeout",
@@ -210,10 +211,11 @@ const resources = {
         
         // Success messages
         saveSuccess: "配置保存成功",
-        clearSuccess: "配置已清除",
+        clearSuccess: "配置清除成功",
         
         // Error messages
         saveError: "保存配置失败",
+        clearError: "清除配置失败",
         testError: "连接测试失败",
         networkError: "网络错误",
         timeoutError: "连接超时",

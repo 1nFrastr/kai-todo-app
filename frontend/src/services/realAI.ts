@@ -97,7 +97,7 @@ export const realAIGenerate = async (
             content: userPrompt
           }
         ],
-        max_tokens: type === 'short_text' ? 100 : 500,
+        max_tokens: type === 'short_text' ? 30 : 150,
         temperature: 0.7,
         stream: false,
       }),
@@ -178,12 +178,12 @@ const buildSystemPrompt = (type: 'short_text' | 'long_text', language: string): 
   
   if (type === 'short_text') {
     return isZhCn
-      ? '你是一个专业的内容生成助手。请根据用户的要求生成简洁、准确的短文本内容。回复应该直接、实用，通常在1-2句话内完成。'
-      : 'You are a professional content generation assistant. Please generate concise and accurate short text content based on user requirements. Responses should be direct and practical, usually completed within 1-2 sentences.';
+      ? '你是一个专业的待办事项助手。请根据用户的要求生成简洁的待办事项标题。回复必须是一句话，不超过20个字，直接给出标题内容，不需要解释。'
+      : 'You are a professional todo assistant. Please generate concise todo item titles based on user requirements. Response must be one sentence, no more than 50 characters, provide the title directly without explanation.';
   } else {
     return isZhCn
-      ? '你是一个专业的内容生成助手。请根据用户的要求生成详细、完整的长文本内容。回复应该结构清晰、内容丰富，包含必要的细节和说明。'
-      : 'You are a professional content generation assistant. Please generate detailed and complete long text content based on user requirements. Responses should be well-structured and content-rich, including necessary details and explanations.';
+      ? '你是一个专业的待办事项助手。请根据用户的要求生成待办事项的详细描述。回复应该简洁明了，不超过100个字，包含必要的步骤或注意事项，直接给出描述内容。'
+      : 'You are a professional todo assistant. Please generate detailed descriptions for todo items based on user requirements. Response should be concise, no more than 200 characters, include necessary steps or notes, provide the description directly.';
   }
 };
 
@@ -195,12 +195,12 @@ const buildUserPrompt = (prompt: string, type: 'short_text' | 'long_text', langu
   
   if (type === 'short_text') {
     return isZhCn
-      ? `请为以下需求生成一个简洁的标题或短描述：${prompt}`
-      : `Please generate a concise title or short description for the following requirement: ${prompt}`;
+      ? `请为以下待办事项需求生成一个简洁的标题：${prompt}`
+      : `Please generate a concise title for the following todo requirement: ${prompt}`;
   } else {
     return isZhCn
-      ? `请为以下需求生成详细的描述内容：${prompt}`
-      : `Please generate detailed description content for the following requirement: ${prompt}`;
+      ? `请为以下待办事项需求生成详细的描述内容：${prompt}`
+      : `Please generate a detailed description for the following todo requirement: ${prompt}`;
   }
 };
 

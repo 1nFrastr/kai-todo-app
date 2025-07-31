@@ -51,6 +51,9 @@ export const useAIConfig = (): UseAIConfigReturn => {
       localStorage.setItem(AI_CONFIG_STORAGE_KEY, JSON.stringify(configToStore));
       setConfig(newConfig);
       setTestResult(null); // Clear previous test results
+      
+      // Dispatch custom event to notify other components about config change
+      window.dispatchEvent(new CustomEvent('ai-config-changed'));
     } catch (error) {
       console.error('Failed to save AI config:', error);
       throw new Error('Failed to save configuration');
@@ -175,6 +178,9 @@ export const useAIConfig = (): UseAIConfigReturn => {
     localStorage.removeItem(AI_CONFIG_STORAGE_KEY);
     setConfig(null);
     setTestResult(null);
+    
+    // Dispatch custom event to notify other components about config change
+    window.dispatchEvent(new CustomEvent('ai-config-changed'));
   }, []);
 
   /**
