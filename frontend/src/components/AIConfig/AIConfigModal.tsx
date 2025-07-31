@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AIConfigModalProps } from './types';
 import { AIConfigForm } from './AIConfigForm';
-import { useAIConfig } from './hooks/useAIConfig';
+import { useAIConfig } from '../../hooks/useAIConfig';
 import './AIConfigModal.scss';
 
 export const AIConfigModal: React.FC<AIConfigModalProps> = ({
@@ -10,6 +10,8 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation();
+  
+  // Use centralized hook that connects to Zustand store
   const {
     config,
     isLoading,

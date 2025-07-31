@@ -1,7 +1,7 @@
 // AI Configuration components exports
 export { AIConfigModal } from './AIConfigModal';
 export { AIConfigForm } from './AIConfigForm';
-export { useAIConfig } from './hooks/useAIConfig';
+// Note: useAIConfig is now exported from hooks/useAIConfig.ts (using Zustand store)
 export type { 
   AIConfig, 
   TestResult, 
