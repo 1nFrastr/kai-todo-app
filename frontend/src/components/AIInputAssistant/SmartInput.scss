@@ -113,6 +113,17 @@
       animation: pulse 1.5s ease-in-out infinite;
     }
 
+    &--unconfigured {
+      color: var(--color-text-secondary);
+      border: 1px dashed var(--color-border);
+
+      &:hover:not(:disabled) {
+        background: var(--color-error-light);
+        border-color: var(--color-error);
+        color: var(--color-error);
+      }
+    }
+
     [data-theme="dark"] & {
       &:hover:not(:disabled) {
         background: var(--color-hover-dark);
@@ -121,6 +132,17 @@
       &:focus {
         background: var(--color-hover-dark);
         box-shadow: 0 0 0 2px var(--color-primary-dark-light);
+      }
+
+      &.smart-input__ai-button--unconfigured {
+        color: var(--color-text-secondary-dark);
+        border-color: var(--color-border-dark);
+
+        &:hover:not(:disabled) {
+          background: var(--color-error-dark-light);
+          border-color: var(--color-error-dark);
+          color: var(--color-error-dark);
+        }
       }
     }
   }

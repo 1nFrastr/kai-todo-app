@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import AIPromptPanel from './AIPromptPanel';
 import { useSmartInput } from './hooks/useSmartInput';
+import { isAIConfigured } from '../../services/realAI';
+import { AIConfigModal } from '../AIConfig';
 import type { SmartInputProps } from './types';
 import './SmartInput.scss';
 
@@ -21,14 +23,23 @@ const SmartInput: React.FC<SmartInputProps> = ({
 }) => {
   const { t } = useTranslation();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { generateContent, isGenerating, error } = useSmartInput();
+  
+  // Check if AI is configured
+  const aiConfigured = isAIConfigured();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange(e.target.value);
   };
 
   const handleAIButtonClick = () => {
+    if (!aiConfigured) {
+      // Open configuration modal instead of alert
+      setIsConfigModalOpen(true);
+      return;
+    }
     setIsPanelOpen(!isPanelOpen);
   };
 
@@ -71,7 +82,8 @@ const SmartInput: React.FC<SmartInputProps> = ({
   const aiButtonClassNames = [
     'smart-input__ai-button',
     aiButtonClassName,
-    isGenerating ? 'smart-input__ai-button--generating' : ''
+    isGenerating ? 'smart-input__ai-button--generating' : '',
+    !aiConfigured ? 'smart-input__ai-button--unconfigured' : ''
   ].filter(Boolean).join(' ');
 
   return (
@@ -103,12 +115,12 @@ const SmartInput: React.FC<SmartInputProps> = ({
             className={aiButtonClassNames}
             onClick={handleAIButtonClick}
             disabled={disabled || isGenerating}
-            title={t('ai.buttonTitle')}
-            aria-label={t('ai.buttonTitle')}
+            title={aiConfigured ? t('ai.buttonTitle') : t('aiConfig.apiKeyRequired')}
+            aria-label={aiConfigured ? t('ai.buttonTitle') : t('aiConfig.apiKeyRequired')}
             type="button"
           >
             <span className="smart-input__ai-icon" role="img" aria-hidden="true">
-              {isGenerating ? '⏳' : '🪄'}
+              {isGenerating ? '⏳' : aiConfigured ? '🪄' : '⚙️'}
             </span>
           </button>
         )}
@@ -124,6 +136,12 @@ const SmartInput: React.FC<SmartInputProps> = ({
           placeholder={aiPromptPlaceholder}
         />
       )}
+      
+      {/* AI Configuration Modal */}
+      <AIConfigModal
+        isOpen={isConfigModalOpen}
+        onClose={() => setIsConfigModalOpen(false)}
+      />
     </div>
   );
 };
