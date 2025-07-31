@@ -130,8 +130,10 @@ export const AIConfigForm: React.FC<AIConfigFormProps> = ({
   /**
    * Handle form submission
    */
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
     
     if (!validateForm()) {
       return;
@@ -164,7 +166,9 @@ export const AIConfigForm: React.FC<AIConfigFormProps> = ({
   };
 
   return (
-    <form className="ai-config-form" onSubmit={handleSubmit}>
+    <form className="ai-config-form"
+      // Form submission is handled by the button click, not form submit event
+    >
       {/* API Key Field */}
       <div className="form-group">
         <label htmlFor="apiKey" className="form-label">
@@ -306,8 +310,9 @@ export const AIConfigForm: React.FC<AIConfigFormProps> = ({
             {t('aiConfig.cancel')}
           </button>
           <button
-            type="submit"
+            type="button"
             className="primary-button"
+            onClick={handleSubmit}
             disabled={isLoading || isTesting}
           >
             {isLoading ? t('loading') : t('aiConfig.save')}

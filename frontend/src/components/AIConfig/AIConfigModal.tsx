@@ -25,12 +25,15 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
    */
   const handleSave = async (newConfig: Parameters<typeof saveConfig>[0]) => {
     try {
+      console.log('Attempting to save AI config:', { ...newConfig, apiKey: '[HIDDEN]' });
       await saveConfig(newConfig);
+      console.log('AI config saved successfully');
       // Close modal after successful save
       onClose();
     } catch (error) {
       console.error('Failed to save config:', error);
-      // Handle error - could show toast or error message
+      // Don't close the modal if save failed - let user see the error
+      alert('保存配置失败，请重试');
     }
   };
 

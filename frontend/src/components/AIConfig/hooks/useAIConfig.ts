@@ -39,8 +39,14 @@ export const useAIConfig = (): UseAIConfigReturn => {
    * Save configuration to localStorage
    */
   const saveConfig = useCallback(async (newConfig: AIConfig) => {
+    console.log('saveConfig called with:', { ...newConfig, apiKey: '[HIDDEN]' });
     setIsLoading(true);
     try {
+      // Validate required fields
+      if (!newConfig.apiKey || !newConfig.baseURL || !newConfig.model) {
+        throw new Error('Missing required configuration fields');
+      }
+
       // Encode API key with base64 before storing
       const configToStore = {
         ...newConfig,
@@ -48,15 +54,21 @@ export const useAIConfig = (): UseAIConfigReturn => {
         lastUpdated: Date.now(),
       };
       
+      console.log('Storing config to localStorage...');
       localStorage.setItem(AI_CONFIG_STORAGE_KEY, JSON.stringify(configToStore));
+      
+      console.log('Setting config state...');
       setConfig(newConfig);
       setTestResult(null); // Clear previous test results
       
+      console.log('Dispatching ai-config-changed event...');
       // Dispatch custom event to notify other components about config change
       window.dispatchEvent(new CustomEvent('ai-config-changed'));
+      
+      console.log('AI config saved successfully');
     } catch (error) {
       console.error('Failed to save AI config:', error);
-      throw new Error('Failed to save configuration');
+      throw new Error(`Failed to save configuration: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }

@@ -123,7 +123,7 @@ const SmartInput: React.FC<SmartInputProps> = ({
             type="button"
           >
             <span className="smart-input__ai-icon" role="img" aria-hidden="true">
-              {isGenerating ? '⏳' : '🪄'}
+              {isGenerating ? '⏳' : aiConfigured ? '🪄' : '⚙️'}
             </span>
           </button>
         )}

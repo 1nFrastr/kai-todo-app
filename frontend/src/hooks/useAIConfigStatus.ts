@@ -10,7 +10,9 @@ export const useAIConfigStatus = () => {
 
   // Check if AI is configured on mount
   useEffect(() => {
-    setAiConfigured(isAIConfigured());
+    const initialStatus = isAIConfigured();
+    console.log('useAIConfigStatus - Initial AI status:', initialStatus);
+    setAiConfigured(initialStatus);
   }, []);
 
   // Listen for localStorage changes to update AI configuration status
@@ -18,7 +20,9 @@ export const useAIConfigStatus = () => {
     const handleStorageChange = (e: StorageEvent) => {
       // Check if the AI config key was changed
       if (e.key === 'ai-config' || e.key === null) {
-        setAiConfigured(isAIConfigured());
+        const newStatus = isAIConfigured();
+        console.log('useAIConfigStatus - Storage change detected, new status:', newStatus);
+        setAiConfigured(newStatus);
       }
     };
 
@@ -27,7 +31,9 @@ export const useAIConfigStatus = () => {
 
     // For changes in the same tab, we need a custom event
     const handleCustomConfigChange = () => {
-      setAiConfigured(isAIConfigured());
+      const newStatus = isAIConfigured();
+      console.log('useAIConfigStatus - Custom config change detected, new status:', newStatus);
+      setAiConfigured(newStatus);
     };
 
     window.addEventListener('ai-config-changed', handleCustomConfigChange);
