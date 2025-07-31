@@ -26,8 +26,8 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
   const handleSave = async (newConfig: Parameters<typeof saveConfig>[0]) => {
     try {
       await saveConfig(newConfig);
-      // Show success message or close modal
-      // For now, we'll keep the modal open to show the save was successful
+      // Close modal after successful save
+      onClose();
     } catch (error) {
       console.error('Failed to save config:', error);
       // Handle error - could show toast or error message
