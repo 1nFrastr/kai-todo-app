@@ -44,7 +44,21 @@ export const AIConfigForm: React.FC<AIConfigFormProps> = ({
       if (!isModelInOptions && config.model) {
         setIsCustomModel(true);
         setCustomModel(config.model);
+      } else {
+        setIsCustomModel(false);
+        setCustomModel('');
       }
+    } else {
+      // If config is null/undefined, reset form to default values
+      setFormData({
+        apiKey: '',
+        baseURL: DEFAULT_AI_CONFIG.baseURL,
+        model: DEFAULT_AI_CONFIG.model,
+        timeout: DEFAULT_AI_CONFIG.timeout,
+        lastUpdated: 0,
+      });
+      setIsCustomModel(false);
+      setCustomModel('');
     }
   }, [config]);
 

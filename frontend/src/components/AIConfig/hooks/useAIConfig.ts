@@ -11,11 +11,6 @@ export const useAIConfig = (): UseAIConfigReturn => {
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<TestResult | null>(null);
 
-  // Load configuration from localStorage on mount
-  useEffect(() => {
-    loadConfig();
-  }, []);
-
   /**
    * Load configuration from localStorage
    */
@@ -29,11 +24,35 @@ export const useAIConfig = (): UseAIConfigReturn => {
           parsedConfig.apiKey = atob(parsedConfig.apiKey);
         }
         setConfig(parsedConfig);
+      } else {
+        // If no config exists in localStorage, clear the current config state
+        setConfig(null);
       }
     } catch (error) {
       console.error('Failed to load AI config:', error);
+      // On error, also clear the config state to be safe
+      setConfig(null);
     }
   }, []);
+
+  // Load configuration from localStorage on mount
+  useEffect(() => {
+    loadConfig();
+  }, [loadConfig]);
+
+  // Listen for configuration changes from other components
+  useEffect(() => {
+    const handleConfigChange = () => {
+      console.log('useAIConfig - Detected config change, reloading...');
+      loadConfig();
+    };
+
+    window.addEventListener('ai-config-changed', handleConfigChange);
+
+    return () => {
+      window.removeEventListener('ai-config-changed', handleConfigChange);
+    };
+  }, [loadConfig]);
 
   /**
    * Save configuration to localStorage
