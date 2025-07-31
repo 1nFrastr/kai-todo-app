@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import AIPromptPanel from './AIPromptPanel';
 import { useSmartInput } from './hooks/useSmartInput';
-import { isAIConfigured } from '../../services/realAI';
+import { useAIConfigStatus } from '../../hooks/useAIConfigStatus';
 import { AIConfigModal } from '../AIConfig';
 import type { SmartInputProps } from './types';
 import './SmartInput.scss';
@@ -24,40 +24,9 @@ const SmartInput: React.FC<SmartInputProps> = ({
   const { t } = useTranslation();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
-  const [aiConfigured, setAiConfigured] = useState(false);
+  const aiConfigured = useAIConfigStatus(); // Use global hook instead of local state
   const containerRef = useRef<HTMLDivElement>(null);
   const { generateContent, isGenerating, error } = useSmartInput();
-  
-  // Check if AI is configured on mount
-  useEffect(() => {
-    setAiConfigured(isAIConfigured());
-  }, []);
-
-  // Listen for localStorage changes to update AI configuration status
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      // Check if the AI config key was changed
-      if (e.key === 'ai-config' || e.key === null) {
-        setAiConfigured(isAIConfigured());
-      }
-    };
-
-    // Listen for storage events from other tabs/windows
-    window.addEventListener('storage', handleStorageChange);
-
-    // For changes in the same tab, we need a custom event or polling
-    // Let's use a custom event approach
-    const handleCustomConfigChange = () => {
-      setAiConfigured(isAIConfigured());
-    };
-
-    window.addEventListener('ai-config-changed', handleCustomConfigChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('ai-config-changed', handleCustomConfigChange);
-    };
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange(e.target.value);
@@ -74,8 +43,7 @@ const SmartInput: React.FC<SmartInputProps> = ({
 
   const handleConfigModalClose = () => {
     setIsConfigModalOpen(false);
-    // Re-check AI configuration after modal closes
-    setAiConfigured(isAIConfigured());
+    // AI configuration status will be automatically updated by the useAIConfigStatus hook
   };
 
   const handlePanelClose = () => {
