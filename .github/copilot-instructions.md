@@ -34,5 +34,11 @@
 - 必须使用Sass作为样式预处理器
 - 多语言配置文件写在前端维护
 
+## CLI命令规范
+
+- 根据当前操作系统来决定使用的命令行工具
+- Windows使用Git bash，Linux和Mac使用Bash
+- 注意windows下的路径风格，在git bash下可以直接使用如 /d/work/my-project 这样的路径
+
 ## UI样式
 - 仅考虑PC端网页版布局，不需要考虑移动端适配

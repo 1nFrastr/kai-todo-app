@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SmartInput } from './AIInputAssistant';
 import type { Todo, CreateTodo } from '../types/todo';
 import './TodoForm.scss';
 
@@ -45,24 +46,31 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
         
         <div className="form-group">
           <label htmlFor="title">{t('titleLabel')}</label>
-          <input
-            type="text"
-            id="title"
+          <SmartInput
+            type="input"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={setTitle}
             placeholder={t('titlePlaceholder')}
-            required
+            aiEnabled={true}
+            inputProps={{
+              id: 'title',
+              required: true
+            }}
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="description">{t('descriptionLabel')}</label>
-          <textarea
-            id="description"
+          <SmartInput
+            type="textarea"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={setDescription}
             placeholder={t('descriptionPlaceholder')}
-            rows={3}
+            aiEnabled={true}
+            textareaProps={{
+              id: 'description',
+              rows: 3
+            }}
           />
         </div>
 

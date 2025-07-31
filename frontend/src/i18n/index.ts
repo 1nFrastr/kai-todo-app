@@ -52,7 +52,18 @@ const resources = {
       // Language
       language: "Language",
       english: "English",
-      chinese: "中文"
+      chinese: "中文",
+      
+      // AI Assistant
+      ai: {
+        buttonTitle: "AI Assistant",
+        panelTitle: "AI Content Generator",
+        closePanel: "Close",
+        promptPlaceholder: "Describe what you want to generate...",
+        generateButton: "Generate",
+        generating: "Generating...",
+        shortcutHint: "Press Ctrl+Enter to generate"
+      }
     }
   },
   zh: {
@@ -103,7 +114,18 @@ const resources = {
       // Language
       language: "语言",
       english: "English",
-      chinese: "中文"
+      chinese: "中文",
+      
+      // AI Assistant
+      ai: {
+        buttonTitle: "AI助手",
+        panelTitle: "AI内容生成器",
+        closePanel: "关闭",
+        promptPlaceholder: "描述您想要生成的内容...",
+        generateButton: "生成",
+        generating: "生成中...",
+        shortcutHint: "按 Ctrl+Enter 生成"
+      }
     }
   }
 };
