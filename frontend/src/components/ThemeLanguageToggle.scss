@@ -11,7 +11,8 @@
 }
 
 .language-toggle,
-.theme-toggle {
+.theme-toggle,
+.ai-config-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -51,7 +52,8 @@
   }
 }
 
-.theme-btn {
+.theme-btn,
+.ai-config-btn {
   padding: 0.5rem;
   border: 2px solid var(--border-color);
   border-radius: 50%;
@@ -68,5 +70,14 @@
   &:hover {
     border-color: var(--primary-color);
     transform: scale(1.1);
+  }
+}
+
+.ai-config-btn {
+  color: var(--text-color);
+  
+  &:hover {
+    color: var(--primary-color);
+    background: var(--bg-hover);
   }
 }

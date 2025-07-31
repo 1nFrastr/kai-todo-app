@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AIConfigModal } from './AIConfig';
 import './ThemeLanguageToggle.scss';
 
 interface ThemeLanguageToggleProps {
@@ -12,6 +13,7 @@ const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
   onThemeChange,
 }) => {
   const { t, i18n } = useTranslation();
+  const [isAIConfigOpen, setIsAIConfigOpen] = useState(false);
 
   const handleLanguageChange = (language: string) => {
     i18n.changeLanguage(language);
@@ -48,6 +50,23 @@ const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
           {theme === 'light' ? '🌙' : '☀️'}
         </button>
       </div>
+
+      {/* AI Configuration Toggle */}
+      <div className="ai-config-toggle">
+        <button
+          className="ai-config-btn"
+          onClick={() => setIsAIConfigOpen(true)}
+          title={t('aiConfig.buttonTooltip')}
+        >
+          ⚙️
+        </button>
+      </div>
+
+      {/* AI Configuration Modal */}
+      <AIConfigModal
+        isOpen={isAIConfigOpen}
+        onClose={() => setIsAIConfigOpen(false)}
+      />
     </div>
   );
 };

@@ -63,6 +63,55 @@ const resources = {
         generateButton: "Generate",
         generating: "Generating...",
         shortcutHint: "Press Ctrl+Enter to generate"
+      },
+      
+      // AI Configuration
+      aiConfig: {
+        title: "AI Service Configuration",
+        button: "AI Settings",
+        buttonTooltip: "Configure AI Service",
+        
+        // Form fields
+        apiKeyLabel: "API Key *",
+        apiKeyPlaceholder: "Enter OpenAI API Key",
+        baseUrlLabel: "Base URL",
+        baseUrlPlaceholder: "https://api.openai.com/v1",
+        modelLabel: "Model",
+        modelPlaceholder: "Select or enter model name",
+        timeoutLabel: "Timeout (seconds)",
+        
+        // Buttons
+        testConnection: "Test Connection",
+        save: "Save",
+        cancel: "Cancel",
+        clear: "Clear Config",
+        
+        // Test results
+        testing: "Testing...",
+        testSuccess: "Connection successful",
+        testFailed: "Connection failed",
+        
+        // Validation messages
+        apiKeyRequired: "API Key is required",
+        invalidUrl: "Please enter a valid URL",
+        modelRequired: "Model is required",
+        timeoutRange: "Timeout must be between 5-300 seconds",
+        
+        // Success messages
+        saveSuccess: "Configuration saved successfully",
+        clearSuccess: "Configuration cleared",
+        
+        // Error messages
+        saveError: "Failed to save configuration",
+        testError: "Connection test failed",
+        networkError: "Network error",
+        timeoutError: "Connection timeout",
+        invalidApiKey: "Invalid API key",
+        accessForbidden: "Access forbidden",
+        serviceNotFound: "Service not found. Please check the base URL",
+        rateLimitExceeded: "Rate limit exceeded",
+        serverError: "Server error",
+        invalidResponse: "Invalid response format"
       }
     }
   },
@@ -125,6 +174,55 @@ const resources = {
         generateButton: "生成",
         generating: "生成中...",
         shortcutHint: "按 Ctrl+Enter 生成"
+      },
+      
+      // AI Configuration
+      aiConfig: {
+        title: "AI服务配置",
+        button: "AI设置",
+        buttonTooltip: "配置AI服务",
+        
+        // Form fields
+        apiKeyLabel: "API密钥 *",
+        apiKeyPlaceholder: "请输入OpenAI API密钥",
+        baseUrlLabel: "服务地址",
+        baseUrlPlaceholder: "https://api.openai.com/v1",
+        modelLabel: "模型",
+        modelPlaceholder: "选择或输入模型名称",
+        timeoutLabel: "超时时间（秒）",
+        
+        // Buttons
+        testConnection: "测试连接",
+        save: "保存",
+        cancel: "取消",
+        clear: "清除配置",
+        
+        // Test results
+        testing: "测试中...",
+        testSuccess: "连接成功",
+        testFailed: "连接失败",
+        
+        // Validation messages
+        apiKeyRequired: "API密钥不能为空",
+        invalidUrl: "请输入有效的URL地址",
+        modelRequired: "模型不能为空",
+        timeoutRange: "超时时间必须在5-300秒之间",
+        
+        // Success messages
+        saveSuccess: "配置保存成功",
+        clearSuccess: "配置已清除",
+        
+        // Error messages
+        saveError: "保存配置失败",
+        testError: "连接测试失败",
+        networkError: "网络错误",
+        timeoutError: "连接超时",
+        invalidApiKey: "API密钥无效",
+        accessForbidden: "访问被拒绝",
+        serviceNotFound: "服务未找到，请检查服务地址",
+        rateLimitExceeded: "请求频率超限",
+        serverError: "服务器错误",
+        invalidResponse: "响应格式无效"
       }
     }
   }

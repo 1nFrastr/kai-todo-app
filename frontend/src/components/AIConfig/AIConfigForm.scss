@@ -1,0 +1,237 @@
+// AI Configuration Form Styles
+.ai-config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-input, .form-select {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      background-color: var(--background-secondary);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      &:disabled {
+        background-color: var(--background-disabled);
+        color: var(--text-disabled);
+        cursor: not-allowed;
+      }
+
+      &.error {
+        border-color: var(--error-color);
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+      }
+
+      &::placeholder {
+        color: var(--text-secondary);
+      }
+    }
+
+    .input-with-action {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .form-input {
+        flex: 1;
+        padding-right: 3rem;
+      }
+
+      .input-action-button {
+        position: absolute;
+        right: 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1rem;
+        color: var(--text-secondary);
+        border-radius: 0.25rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: var(--text-primary);
+          background-color: var(--background-hover);
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .custom-model-input {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+
+      .form-input {
+        flex: 1;
+      }
+
+      .secondary-button {
+        white-space: nowrap;
+      }
+    }
+
+    .error-message {
+      font-size: 0.75rem;
+      color: var(--error-color);
+      margin-top: 0.25rem;
+    }
+  }
+
+  .test-result {
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+
+    &.success {
+      background-color: var(--success-background);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+    }
+
+    &.error {
+      background-color: var(--error-background);
+      border: 1px solid var(--error-border);
+      color: var(--error-text);
+    }
+
+    .test-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .test-message {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .test-error-details {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-top: 0.25rem;
+      font-family: monospace;
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      word-break: break-all;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+
+    .left-actions, .right-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .primary-button, .secondary-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    }
+
+    .primary-button {
+      background-color: var(--primary-color);
+      color: var(--primary-text);
+
+      &:hover:not(:disabled) {
+        background-color: var(--primary-hover);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+      }
+    }
+
+    .secondary-button {
+      background-color: var(--background-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+
+      &:hover:not(:disabled) {
+        background-color: var(--background-hover);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+// Dark theme support
+[data-theme="dark"] {
+  .ai-config-form {
+    .form-input, .form-select {
+      background-color: var(--background-secondary);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+
+      &::placeholder {
+        color: var(--text-secondary);
+      }
+    }
+
+    .test-result {
+      &.success {
+        background-color: rgba(34, 197, 94, 0.1);
+        border-color: rgba(34, 197, 94, 0.3);
+        color: rgb(34, 197, 94);
+      }
+
+      &.error {
+        background-color: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: rgb(239, 68, 68);
+      }
+    }
+  }
+}
