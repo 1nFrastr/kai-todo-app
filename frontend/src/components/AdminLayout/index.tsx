@@ -43,7 +43,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
     },
     {
       path: '/admin/profile',
-      label: t('admin.profile'),
+      label: t('admin.profileMenu'),
       icon: '👤',
       requiredRole: null,
     },
