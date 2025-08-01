@@ -54,24 +54,28 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
 
         {/* Settings Section - Bottom */}
         <div className="sidebar-settings">
-          {/* Theme and Language Toggle */}
-          <div className="settings-item">
-            <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
-          </div>
+          {/* Theme and Language Toggle - Only show when expanded */}
+          {isExpanded && (
+            <div className="settings-item">
+              <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
+            </div>
+          )}
           
-          {/* AI Configuration Toggle */}
-          <div className="ai-config-item">
-            <button
-              className="ai-config-btn"
-              onClick={() => setIsAIConfigOpen(true)}
-              title={t('aiConfig.buttonTooltip')}
-            >
-              <span className="ai-config-icon">⚙️</span>
-              {isExpanded && <span className="ai-config-label">{t('aiConfig.title', 'AI Config')}</span>}
-            </button>
-          </div>
+          {/* AI Configuration Toggle - Only show when expanded */}
+          {isExpanded && (
+            <div className="ai-config-item">
+              <button
+                className="ai-config-btn"
+                onClick={() => setIsAIConfigOpen(true)}
+                title={t('aiConfig.buttonTooltip')}
+              >
+                <span className="ai-config-icon">⚙️</span>
+                <span className="ai-config-label">{t('aiConfig.title', 'AI Config')}</span>
+              </button>
+            </div>
+          )}
           
-          {/* Sidebar Toggle Button */}
+          {/* Sidebar Toggle Button - Always show */}
           <button
             className="sidebar-toggle"
             onClick={toggleSidebar}
