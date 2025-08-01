@@ -21,34 +21,42 @@ const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
 
   return (
     <div className="theme-language-toggle">
-      {/* Language Toggle */}
-      <div className="language-toggle">
+      {/* Language Toggle Row */}
+      <div className="toggle-row">
         <span className="toggle-label">{t('language')}:</span>
-        <button
-          className={`toggle-btn ${i18n.language === 'en' ? 'active' : ''}`}
-          onClick={() => handleLanguageChange('en')}
-        >
-          {t('english')}
-        </button>
-        <button
-          className={`toggle-btn ${i18n.language === 'zh' ? 'active' : ''}`}
-          onClick={() => handleLanguageChange('zh')}
-        >
-          {t('chinese')}
-        </button>
+        <div className="switch-container">
+          <button
+            className={`switch-btn left ${i18n.language === 'en' ? 'active' : ''}`}
+            onClick={() => handleLanguageChange('en')}
+          >
+            EN
+          </button>
+          <button
+            className={`switch-btn right ${i18n.language === 'zh' ? 'active' : ''}`}
+            onClick={() => handleLanguageChange('zh')}
+          >
+            中文
+          </button>
+        </div>
       </div>
 
-      {/* Theme Toggle */}
-      <div className="theme-toggle">
-        <span className="toggle-label">
-          {theme === 'light' ? t('lightMode') : t('darkMode')}:
-        </span>
-        <button
-          className="theme-btn"
-          onClick={() => onThemeChange(theme === 'light' ? 'dark' : 'light')}
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
+      {/* Theme Toggle Row */}
+      <div className="toggle-row">
+        <span className="toggle-label">{t('theme')}:</span>
+        <div className="switch-container">
+          <button
+            className={`switch-btn left ${theme === 'light' ? 'active' : ''}`}
+            onClick={() => onThemeChange('light')}
+          >
+            ☀️
+          </button>
+          <button
+            className={`switch-btn right ${theme === 'dark' ? 'active' : ''}`}
+            onClick={() => onThemeChange('dark')}
+          >
+            🌙
+          </button>
+        </div>
       </div>
 
       {/* AI Configuration Toggle */}

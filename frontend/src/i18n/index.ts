@@ -46,6 +46,7 @@ const resources = {
       deleteConfirm: "Are you sure you want to delete this todo?",
       
       // Theme
+      theme: "Theme",
       lightMode: "Light Mode",
       darkMode: "Dark Mode",
       
@@ -186,6 +187,7 @@ const resources = {
       deleteConfirm: "确定要删除这个待办事项吗？",
       
       // Theme
+      theme: "主题",
       lightMode: "浅色模式",
       darkMode: "深色模式",
       
