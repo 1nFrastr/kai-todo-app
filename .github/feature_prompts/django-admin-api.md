@@ -162,29 +162,6 @@ interface AuthState {
 - `UserTable` - 用户列表组件
 - `UserForm` - 用户编辑表单组件
 
-### 3. 样式规范
-
-#### 设计系统
-- 采用Material Design风格
-- 支持亮色/暗色主题
-- 响应式设计 (主要考虑PC端)
-- 统一的颜色、字体、间距规范
-
-#### 主题变量
-```scss
-// Light theme
-$primary-color: #1976d2;
-$secondary-color: #dc004e;
-$background-color: #ffffff;
-$text-color: #333333;
-
-// Dark theme
-$primary-color-dark: #90caf9;
-$secondary-color-dark: #f48fb1;
-$background-color-dark: #121212;
-$text-color-dark: #ffffff;
-```
-
 ## 开发步骤
 
 ### Phase 1: 后端API开发
