@@ -1,4 +1,6 @@
 .smart-form-input {
+  position: relative; // Required for AIPromptPanel positioning
+  
   &__button {
     display: inline-flex;
     align-items: center;
