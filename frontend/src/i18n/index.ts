@@ -68,7 +68,7 @@ const resources = {
       // Smart Form Input
       smartForm: {
         buttonTitle: "AI Smart Fill",
-        fillForm: "Fill Form",
+        fillForm: "Smart Fill",
         generating: "Generating...",
         formNotFound: "Form element not found",
         noFieldsFound: "No fillable form fields found",
@@ -190,7 +190,7 @@ const resources = {
       // Smart Form Input
       smartForm: {
         buttonTitle: "AI智能填充",
-        fillForm: "填充表单",
+        fillForm: "智能填写",
         generating: "生成中...",
         formNotFound: "未找到表单元素",
         noFieldsFound: "未找到可填充的表单字段",
