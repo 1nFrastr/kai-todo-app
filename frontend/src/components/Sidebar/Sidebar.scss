@@ -122,6 +122,43 @@
   }
 }
 
+.ai-config-item {
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.ai-config-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+
+  &:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-hover);
+    color: var(--primary-color);
+  }
+}
+
+.ai-config-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.ai-config-label {
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
 .sidebar.collapsed .settings-item {
   .theme-language-toggle {
     transform: scale(0.8);
@@ -140,6 +177,18 @@
       padding: 4px 6px;
       font-size: 10px;
     }
+  }
+}
+
+.sidebar.collapsed .ai-config-item {
+  .ai-config-btn {
+    justify-content: center;
+    padding: 12px 8px;
+  }
+  
+  .ai-config-label {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 

@@ -64,32 +64,3 @@
     }
   }
 }
-
-.ai-config-toggle {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.5rem;
-}
-
-.ai-config-btn {
-  padding: 0.5rem;
-  border: 2px solid var(--border-color);
-  border-radius: 50%;
-  background: var(--bg-color);
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.2s ease;
-  width: 40px;
-  height: 40px;  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color);
-
-  &:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background: var(--bg-hover);
-    transform: scale(1.1);
-  }
-}

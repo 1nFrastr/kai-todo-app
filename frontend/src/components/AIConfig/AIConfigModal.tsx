@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AIConfigModalProps } from './types';
 import { AIConfigForm } from './AIConfigForm';
@@ -21,6 +21,21 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
     testConnection,
     clearConfig,
   } = useAIConfig();
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current overflow style
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      // Disable scrolling
+      document.body.style.overflow = 'hidden';
+      
+      // Cleanup function
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [isOpen]);
 
   /**
    * Handle save configuration

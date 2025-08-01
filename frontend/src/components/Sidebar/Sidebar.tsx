@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import { useSidebar } from '../../hooks';
 import ThemeLanguageToggle from '../ThemeLanguageToggle';
+import { AIConfigModal } from '../AIConfig';
 import './Sidebar.scss';
 
 interface SidebarProps {
@@ -12,6 +14,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
   const { t } = useTranslation();
   const { isExpanded, toggleSidebar } = useSidebar();
+  const [isAIConfigOpen, setIsAIConfigOpen] = useState(false);
 
   const menuItems = [
     {
@@ -56,6 +59,18 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
             <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
           </div>
           
+          {/* AI Configuration Toggle */}
+          <div className="ai-config-item">
+            <button
+              className="ai-config-btn"
+              onClick={() => setIsAIConfigOpen(true)}
+              title={t('aiConfig.buttonTooltip')}
+            >
+              <span className="ai-config-icon">⚙️</span>
+              {isExpanded && <span className="ai-config-label">{t('aiConfig.title', 'AI Config')}</span>}
+            </button>
+          </div>
+          
           {/* Sidebar Toggle Button */}
           <button
             className="sidebar-toggle"
@@ -68,6 +83,12 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
           </button>
         </div>
       </div>
+
+      {/* AI Configuration Modal - Global overlay */}
+      <AIConfigModal
+        isOpen={isAIConfigOpen}
+        onClose={() => setIsAIConfigOpen(false)}
+      />
     </aside>
   );
 };
