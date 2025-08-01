@@ -38,6 +38,19 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    // Save current overflow style
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    // Disable scrolling
+    document.body.style.overflow = 'hidden';
+    
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -93,15 +106,45 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
     }
   };
 
+  /**
+   * Handle backdrop click to close modal
+   */
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && !loading) {
+      onCancel();
+    }
+  };
+
+  /**
+   * Handle escape key to close modal
+   */
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape' && !loading) {
+      onCancel();
+    }
+  };
+
   return (
-    <div className="user-form-overlay">
+    <div 
+      className="user-form-overlay"
+      onClick={handleBackdropClick}
+      onKeyDown={handleKeyDown}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="user-form-modal-title"
+    >
       <div className="user-form-modal">
         <div className="user-form-header">
-          <h2>
+          <h2 id="user-form-modal-title">
             {user ? t('admin.users.form.editUser') : t('admin.users.form.addUser')}
           </h2>
-          <button onClick={onCancel} className="close-btn">
-            ✖
+          <button 
+            onClick={onCancel} 
+            className="close-btn"
+            disabled={loading}
+            aria-label={t('common.close')}
+          >
+            ✕
           </button>
         </div>
 
@@ -219,21 +262,23 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
           )}
 
           <div className="form-actions">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="cancel-btn"
-              disabled={loading}
-            >
-              {t('common.cancel')}
-            </button>
-            <button
-              type="submit"
-              className="save-btn"
-              disabled={loading || !formData.username || !formData.email}
-            >
-              {loading ? t('common.saving') : t('common.save')}
-            </button>
+            <div className="right-actions">
+              <button
+                type="button"
+                onClick={onCancel}
+                className="cancel-btn"
+                disabled={loading}
+              >
+                {t('common.cancel')}
+              </button>
+              <button
+                type="submit"
+                className="save-btn"
+                disabled={loading || !formData.username || !formData.email}
+              >
+                {loading ? t('common.saving') : t('common.save')}
+              </button>
+            </div>
           </div>
         </form>
       </div>
