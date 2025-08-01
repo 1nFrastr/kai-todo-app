@@ -18,3 +18,4 @@ Apply the [general coding guidelines](./general-coding.instructions.md) to all c
 - Use React.FC type for components with children
 - Keep components small and focused
 - Use CSS modules for component styling
+- Use Zustand for state management
