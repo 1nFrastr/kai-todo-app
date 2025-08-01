@@ -53,6 +53,24 @@ const resources = {
       language: "Language",
       english: "English",
       chinese: "中文",
+
+      // Navigation
+      navigation: {
+        todoApp: "Todo App",
+        postApp: "Post App",
+        comingSoon: "Coming Soon"
+      },
+
+      // Sidebar  
+      sidebar: {
+        collapse: "Collapse",
+        expand: "Expand"
+      },
+
+      // Post App
+      postApp: {
+        description: "This feature is under development. It will allow you to create and publish content with AI assistance."
+      },
       
       // AI Assistant
       ai: {
@@ -175,6 +193,24 @@ const resources = {
       language: "语言",
       english: "English",
       chinese: "中文",
+
+      // Navigation
+      navigation: {
+        todoApp: "任务管理",
+        postApp: "内容发布",
+        comingSoon: "功能开发中"
+      },
+
+      // Sidebar
+      sidebar: {
+        collapse: "收起",
+        expand: "展开"
+      },
+
+      // Post App
+      postApp: {
+        description: "此功能正在开发中，将支持使用AI辅助创建和发布内容。"
+      },
       
       // AI Assistant
       ai: {

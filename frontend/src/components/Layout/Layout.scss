@@ -1,0 +1,55 @@
+@import '../../index.css';
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  background: var(--background-color);
+}
+
+.main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  
+  &.sidebar-expanded {
+    margin-left: 260px; // 240px sidebar + 20px gap
+  }
+  
+  &.sidebar-collapsed {
+    margin-left: 84px; // 64px sidebar + 20px gap
+  }
+}
+
+.content-wrapper {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .main-content {
+    &.sidebar-expanded {
+      margin-left: 220px; // 200px sidebar + 20px gap
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    
+    &.sidebar-collapsed {
+      margin-left: 0;
+    }
+    
+    &.sidebar-expanded {
+      margin-left: 0;
+    }
+  }
+  
+  .content-wrapper {
+    padding: 16px;
+  }
+}
