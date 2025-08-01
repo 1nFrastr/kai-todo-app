@@ -96,7 +96,7 @@ const resources = {
       
       // AI Configuration
       aiConfig: {
-        title: "AI Service Configuration",
+        title: "AI Settings",
         button: "AI Settings",
         buttonTooltip: "Configure AI Service",
         
@@ -237,7 +237,7 @@ const resources = {
       
       // AI Configuration
       aiConfig: {
-        title: "AI服务配置",
+        title: "AI 设置",
         button: "AI设置",
         buttonTooltip: "配置AI服务",
         

@@ -15,7 +15,7 @@
   overflow: hidden;
 
   &.expanded {
-    width: 240px;
+    width: 200px;
   }
 
   &.collapsed {
@@ -125,21 +125,24 @@
 .ai-config-item {
   margin-bottom: 12px;
   padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ai-config-btn {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
-  padding: 12px;
+  padding: 8px;
   background: transparent;
   border: 2px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.2s ease;
-  gap: 12px;
+  gap: 10px;
+  font-size: 12px;
 
   &:hover {
     border-color: var(--primary-color);
@@ -149,7 +152,7 @@
 }
 
 .ai-config-icon {
-  font-size: 1.2rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
