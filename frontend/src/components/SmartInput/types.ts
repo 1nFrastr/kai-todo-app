@@ -1,4 +1,6 @@
-// SmartInput component type definitions
+/**
+ * SmartInput component type definitions
+ */
 
 export interface SmartInputProps {
   // Basic input component properties
@@ -20,15 +22,6 @@ export interface SmartInputProps {
   // Style customization
   className?: string;
   aiButtonClassName?: string;
-}
-
-export interface AIPromptPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onGenerate: (prompt: string) => void;
-  isGenerating: boolean;
-  error: string | null;
-  placeholder?: string;
 }
 
 export interface UseSmartInputReturn {

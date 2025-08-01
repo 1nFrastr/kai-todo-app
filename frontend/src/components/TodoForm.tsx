@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SmartInput } from './AIInputAssistant';
+import { SmartInput } from './SmartInput';
 import { SmartFormInput } from './SmartFormInput';
 import type { Todo, CreateTodo } from '../types/todo';
 import './TodoForm.scss';

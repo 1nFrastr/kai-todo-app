@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import AIPromptPanel from './AIPromptPanel';
+import { AIPromptPanel } from '../AIPromptPanel';
 import { useSmartInput } from './hooks/useSmartInput';
 import { useAIConfigStatus } from '../../hooks/useAIConfigStatus';
 import { AIConfigModal } from '../AIConfig';
