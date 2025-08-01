@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { AIConfigModalProps } from './types';
 import { AIConfigForm } from './AIConfigForm';
@@ -107,7 +108,7 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
     return null;
   }
 
-  return (
+  return createPortal(
     <div 
       className="ai-config-modal-backdrop" 
       onClick={handleBackdropClick}
@@ -159,6 +160,7 @@ export const AIConfigModal: React.FC<AIConfigModalProps> = ({
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

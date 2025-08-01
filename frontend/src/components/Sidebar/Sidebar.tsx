@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
         </div>
       </div>
 
-      {/* AI Configuration Modal - Global overlay */}
+      {/* AI Configuration Modal - Rendered via Portal to document.body */}
       <AIConfigModal
         isOpen={isAIConfigOpen}
         onClose={() => setIsAIConfigOpen(false)}
