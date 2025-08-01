@@ -10,7 +10,7 @@
     border-radius: 4px;
     background: transparent;
     color: var(--color-text-secondary);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -70,7 +70,7 @@
 
   &__text {
     white-space: nowrap;
-    font-size: 11px;
+    font-size: 14px;
 
     // 在小屏幕上隐藏文字，只显示图标
     @media (max-width: 768px) {
