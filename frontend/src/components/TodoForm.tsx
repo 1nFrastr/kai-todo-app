@@ -96,6 +96,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
             customPrompt={t('smartForm.todoPrompt', { defaultValue: 'This is a todo item creation form. Please generate practical and meaningful content:' })}
             onAfterGenerate={(results) => {
               console.log('SmartForm generated:', results);
+              // Update React state to sync with DOM values
+              if (results.title) {
+                setTitle(results.title);
+              }
+              if (results.description) {
+                setDescription(results.description);
+              }
             }}
           />
         </div>

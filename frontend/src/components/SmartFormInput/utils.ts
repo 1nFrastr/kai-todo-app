@@ -215,15 +215,34 @@ export const fillFormFields = (
     if (newValue !== undefined) {
       // Only fill if field is empty or we're not preserving existing values
       if (!preserveExisting || !field.currentValue.trim()) {
-        field.element.value = newValue;
+        // Set the value using both value property and setAttribute for React compatibility
+        const element = field.element;
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype, 
+          'value'
+        )?.set;
+        const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLTextAreaElement.prototype, 
+          'value'
+        )?.set;
         
-        // Trigger change event to notify React and other listeners
-        const event = new Event('input', { bubbles: true });
-        field.element.dispatchEvent(event);
+        if (element instanceof HTMLInputElement && nativeInputValueSetter) {
+          nativeInputValueSetter.call(element, newValue);
+        } else if (element instanceof HTMLTextAreaElement && nativeTextAreaValueSetter) {
+          nativeTextAreaValueSetter.call(element, newValue);
+        } else {
+          element.value = newValue;
+        }
+        
+        // Trigger React-compatible input event
+        const inputEvent = new Event('input', { bubbles: true });
+        Object.defineProperty(inputEvent, 'target', { writable: false, value: element });
+        element.dispatchEvent(inputEvent);
         
         // Also trigger change event for good measure
         const changeEvent = new Event('change', { bubbles: true });
-        field.element.dispatchEvent(changeEvent);
+        Object.defineProperty(changeEvent, 'target', { writable: false, value: element });
+        element.dispatchEvent(changeEvent);
       }
     }
   });
