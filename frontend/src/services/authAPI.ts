@@ -41,29 +41,42 @@ api.interceptors.response.use(
   async (error) => {
     const original = error.config;
     
+    console.log('🔄 AuthAPI: Response interceptor - status:', error.response?.status, 'url:', original?.url);
+    
     if (error.response?.status === 401 && !original._retry) {
+      console.log('🔄 AuthAPI: 401 error detected, attempting token refresh');
       original._retry = true;
       
       const refreshToken = localStorage.getItem('refresh_token');
       if (refreshToken) {
         try {
+          console.log('🔄 AuthAPI: Attempting to refresh token');
           const response = await axios.post('http://localhost:8000/api/auth/refresh/', {
             refresh: refreshToken,
           });
           
           const { access } = response.data;
           localStorage.setItem('access_token', access);
+          console.log('🔄 AuthAPI: Token refreshed successfully, retrying original request');
           
           // Retry original request
           original.headers.Authorization = `Bearer ${access}`;
           return api(original);
         } catch (refreshError) {
-          // Refresh failed, clear tokens and redirect to login
+          console.error('🔄 AuthAPI: Token refresh failed:', refreshError);
+          // Refresh failed, clear tokens
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          window.location.href = '/admin/login';
+          
+          // Clear auth store state by dispatching a custom event
+          // This way we avoid circular dependencies
+          console.log('🔄 AuthAPI: Dispatching auth-token-expired event');
+          window.dispatchEvent(new CustomEvent('auth-token-expired'));
+          
           return Promise.reject(refreshError);
         }
+      } else {
+        console.log('🔄 AuthAPI: No refresh token available');
       }
     }
     

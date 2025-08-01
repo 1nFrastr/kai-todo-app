@@ -9,7 +9,7 @@ const AdminLoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated, isLoading, error, clearError } = useAuthStore();
+  const { login, isAuthenticated, isLoading, error, clearError, isInitialized } = useAuthStore();
   
   const [credentials, setCredentials] = useState<LoginCredentials>({
     username: '',
@@ -20,15 +20,20 @@ const AdminLoginPage: React.FC = () => {
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(from, { replace: true });
-    }
-  }, [isAuthenticated, navigate, from]);
+  console.log('🔐 LoginPage: Render - isAuthenticated:', isAuthenticated, 'isInitialized:', isInitialized, 'from:', from);
 
   useEffect(() => {
+    console.log('🔐 LoginPage: Auth state changed - isAuthenticated:', isAuthenticated, 'isInitialized:', isInitialized);
+    if (isAuthenticated && isInitialized) {
+      console.log('🔐 LoginPage: User is authenticated, navigating to:', from);
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, isInitialized, navigate, from]);
+
+  useEffect(() => {
+    console.log('🔐 LoginPage: Component mounted, clearing errors');
     clearError();
-  }, [clearError]);
+  }, []); // Remove clearError from dependencies
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

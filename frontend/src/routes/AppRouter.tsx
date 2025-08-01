@@ -63,7 +63,7 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
         {
           path: 'dashboard',
           element: (
-            <ProtectedRoute requiredRole="staff">
+            <ProtectedRoute>
               <AdminLayout theme={theme} onThemeChange={onThemeChange}>
                 <AdminDashboard />
               </AdminLayout>
