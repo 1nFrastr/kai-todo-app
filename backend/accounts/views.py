@@ -103,6 +103,8 @@ class AdminUserListView(generics.ListCreateAPIView):
     
     def get_queryset(self):
         queryset = super().get_queryset()
+        
+        # Search filter
         search = self.request.query_params.get('search', None)
         if search:
             queryset = queryset.filter(
@@ -114,6 +116,16 @@ class AdminUserListView(generics.ListCreateAPIView):
             ) | queryset.filter(
                 last_name__icontains=search
             )
+        
+        # Status filters
+        is_active = self.request.query_params.get('is_active', None)
+        if is_active is not None:
+            queryset = queryset.filter(is_active=is_active.lower() == 'true')
+            
+        is_staff = self.request.query_params.get('is_staff', None)
+        if is_staff is not None:
+            queryset = queryset.filter(is_staff=is_staff.lower() == 'true')
+        
         return queryset.order_by('-date_joined')
 
 
