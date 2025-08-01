@@ -64,6 +64,16 @@ const resources = {
         generating: "Generating...",
         shortcutHint: "Press Ctrl+Enter to generate"
       },
+
+      // Smart Form Input
+      smartForm: {
+        buttonTitle: "AI Smart Fill",
+        fillForm: "Fill Form",
+        generating: "Generating...",
+        formNotFound: "Form element not found",
+        noFieldsFound: "No fillable form fields found",
+        invalidResponse: "AI generated content format is incorrect"
+      },
       
       // AI Configuration
       aiConfig: {
@@ -175,6 +185,16 @@ const resources = {
         generateButton: "生成",
         generating: "生成中...",
         shortcutHint: "按 Ctrl+Enter 生成"
+      },
+
+      // Smart Form Input
+      smartForm: {
+        buttonTitle: "AI智能填充",
+        fillForm: "填充表单",
+        generating: "生成中...",
+        formNotFound: "未找到表单元素",
+        noFieldsFound: "未找到可填充的表单字段",
+        invalidResponse: "AI生成的内容格式不正确"
       },
       
       // AI Configuration

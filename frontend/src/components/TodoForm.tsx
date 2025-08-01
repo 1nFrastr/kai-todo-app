@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SmartInput } from './AIInputAssistant';
+import { SmartFormInput } from './SmartFormInput';
 import type { Todo, CreateTodo } from '../types/todo';
 import './TodoForm.scss';
 
@@ -14,6 +15,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (editingTodo) {
@@ -41,7 +43,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
 
   return (
     <div className="todo-form-container">
-      <form onSubmit={handleSubmit} className="todo-form">
+      <form ref={formRef} onSubmit={handleSubmit} className="todo-form">
         <h2>{editingTodo ? t('editTodo') : t('addNewTodo')}</h2>
         
         <div className="form-group">
@@ -54,6 +56,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
             aiEnabled={true}
             inputProps={{
               id: 'title',
+              name: 'title',
               required: true
             }}
           />
@@ -69,6 +72,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
             aiEnabled={true}
             textareaProps={{
               id: 'description',
+              name: 'description',
               rows: 3
             }}
           />
@@ -87,6 +91,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
               {t('cancelButton')}
             </button>
           )}
+          <SmartFormInput 
+            formRef={formRef}
+            customPrompt={t('smartForm.todoPrompt', { defaultValue: 'This is a todo item creation form. Please generate practical and meaningful content:' })}
+            onAfterGenerate={(results) => {
+              console.log('SmartForm generated:', results);
+            }}
+          />
         </div>
       </form>
     </div>

@@ -1,0 +1,164 @@
+.smart-form-input {
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+
+    &:hover:not(:disabled) {
+      background: var(--color-hover);
+      border-color: var(--color-primary);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--color-primary-light);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &--generating {
+      animation: pulse 1.5s ease-in-out infinite;
+      
+      .smart-form-input__icon {
+        animation: rotate 2s linear infinite;
+      }
+    }
+
+    &--unconfigured {
+      border-style: dashed;
+      color: var(--color-text-secondary);
+
+      &:hover:not(:disabled) {
+        background: var(--color-error-light);
+        border-color: var(--color-error);
+        color: var(--color-error);
+      }
+    }
+
+    // Dark mode support
+    [data-theme="dark"] & {
+      background: var(--color-background-dark);
+      border-color: var(--color-border-dark);
+      color: var(--color-text-dark);
+
+      &:hover:not(:disabled) {
+        background: var(--color-hover-dark);
+        border-color: var(--color-primary-dark);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--color-primary-dark-light);
+      }
+
+      &.smart-form-input__button--unconfigured {
+        color: var(--color-text-secondary-dark);
+        border-color: var(--color-border-dark);
+
+        &:hover:not(:disabled) {
+          background: var(--color-error-dark-light);
+          border-color: var(--color-error-dark);
+          color: var(--color-error-dark);
+        }
+      }
+    }
+  }
+
+  &__icon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    white-space: nowrap;
+  }
+
+  &__error {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+    background: var(--color-error-light);
+    border: 1px solid var(--color-error);
+    border-radius: 4px;
+    color: var(--color-error);
+    font-size: 13px;
+    line-height: 1.4;
+
+    [data-theme="dark"] & {
+      background: var(--color-error-dark-light);
+      border-color: var(--color-error-dark);
+      color: var(--color-error-dark);
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// CSS custom properties (should be consistent with existing theme)
+:root {
+  --color-background: #ffffff;
+  --color-border: #e1e5e9;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-primary: #007bff;
+  --color-primary-light: rgba(0, 123, 255, 0.2);
+  --color-hover: #f8f9fa;
+  --color-error: #dc3545;
+  --color-error-light: rgba(220, 53, 69, 0.1);
+
+  // Dark mode colors
+  --color-background-dark: #1a1a1a;
+  --color-border-dark: #333333;
+  --color-text-dark: #e0e0e0;
+  --color-text-secondary-dark: #999999;
+  --color-primary-dark: #0d6efd;
+  --color-primary-dark-light: rgba(13, 110, 253, 0.2);
+  --color-hover-dark: #333333;
+  --color-error-dark: #dc3545;
+  --color-error-dark-light: rgba(220, 53, 69, 0.2);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .smart-form-input {
+    &__button {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    &__text {
+      display: none; // Hide text on mobile, show only icon
+    }
+  }
+}
