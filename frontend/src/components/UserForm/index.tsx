@@ -19,6 +19,7 @@ interface UserFormData {
   is_staff: boolean;
   is_superuser: boolean;
   password?: string;
+  groups: string[];
 }
 
 const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
@@ -32,6 +33,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
     is_staff: false,
     is_superuser: false,
     password: '',
+    groups: [],
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,6 +48,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
         is_active: user.is_active,
         is_staff: user.is_staff,
         is_superuser: user.is_superuser,
+        groups: user.groups || [],
       });
     }
   }, [user]);
@@ -59,11 +62,8 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
       let savedUser: AdminUser;
       
       if (user) {
-        // Update existing user
-        const updateData = { ...formData };
-        if (!updateData.password) {
-          delete updateData.password;
-        }
+        // Update existing user - exclude password field entirely
+        const { password, ...updateData } = formData;
         savedUser = await adminAPI.users.update(user.id, updateData);
       } else {
         // Create new user
@@ -160,11 +160,10 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
             </div>
           </div>
 
-          {(!user || user) && (
+          {!user && (
             <div className="form-group">
               <label htmlFor="password">
-                {user ? t('admin.users.form.newPassword') : t('admin.users.form.password')}
-                {!user && ' *'}
+                {t('admin.users.form.password')} *
               </label>
               <input
                 type="password"
@@ -172,9 +171,8 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
                 name="password"
                 value={formData.password || ''}
                 onChange={handleChange}
-                required={!user}
+                required
                 autoComplete="new-password"
-                placeholder={user ? t('admin.users.form.passwordPlaceholder') : ''}
               />
             </div>
           )}
