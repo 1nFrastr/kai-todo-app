@@ -9,7 +9,8 @@ import type {
   UserUpdateData,
   AdminUser,
   Group,
-  DashboardStats
+  DashboardStats,
+  PaginatedResponse
 } from '../types/auth';
 
 // Create axios instance
@@ -128,6 +129,12 @@ export const authAPI = {
     });
     return response.data;
   },
+
+  // Get dashboard statistics
+  getDashboardStats: async (): Promise<DashboardStats> => {
+    const response: AxiosResponse<DashboardStats> = await api.get('/admin/dashboard/stats/');
+    return response.data;
+  },
 };
 
 // Admin API
@@ -140,16 +147,22 @@ export const adminAPI = {
 
   // User management
   users: {
-    // Get all users
-    list: async (search?: string): Promise<AdminUser[]> => {
-      const params = search ? { search } : {};
-      const response: AxiosResponse<AdminUser[]> = await api.get('/admin/users/', { params });
+    // Get all users with pagination
+    list: async (queryString?: string): Promise<PaginatedResponse<AdminUser>> => {
+      const url = queryString ? `/admin/users/?${queryString}` : '/admin/users/';
+      const response: AxiosResponse<PaginatedResponse<AdminUser>> = await api.get(url);
       return response.data;
     },
 
     // Get user by ID
     get: async (id: number): Promise<AdminUser> => {
       const response: AxiosResponse<AdminUser> = await api.get(`/admin/users/${id}/`);
+      return response.data;
+    },
+
+    // Create user
+    create: async (data: Omit<AdminUser, 'id' | 'date_joined' | 'last_login'> & { password: string }): Promise<AdminUser> => {
+      const response: AxiosResponse<AdminUser> = await api.post('/admin/users/', data);
       return response.data;
     },
 

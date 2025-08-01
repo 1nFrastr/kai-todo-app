@@ -54,6 +54,22 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, onThemeChange }) => {
 
         {/* Settings Section - Bottom */}
         <div className="sidebar-settings">
+          {/* Admin System Link - Only show when expanded */}
+          {isExpanded && (
+            <div className="admin-link-item">
+              <a
+                href="/admin/dashboard"
+                className="admin-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                title={t('admin.title', 'Admin System')}
+              >
+                <span className="admin-icon">⚙️</span>
+                <span className="admin-label">{t('admin.title', 'Admin System')}</span>
+              </a>
+            </div>
+          )}
+          
           {/* Theme and Language Toggle - Only show when expanded */}
           {isExpanded && (
             <div className="settings-item">
