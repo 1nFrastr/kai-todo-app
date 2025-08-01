@@ -178,3 +178,8 @@ const TodoForm = () => {
 - 支持国际化（中英文）
 - 兼容现有的 SCSS 样式系统
 - 不与 SmartInput 组件产生冲突
+
+## TODO待优化
+
+- 使用SmartFormInput作为父组件包裹原生Form
+- 自动设置AI生成的内容到对应字段，现在是手动设置，写了很多重复代码
