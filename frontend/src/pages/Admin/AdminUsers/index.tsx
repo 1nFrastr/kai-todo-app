@@ -36,7 +36,7 @@ const AdminUsers: React.FC = () => {
       if (filterStaff !== null) params.append('is_staff', filterStaff.toString());
 
       const response: PaginatedResponse<AdminUser> = await adminAPI.users.list(params.toString());
-      setUsers(response.results);
+      setUsers(response.results || []); // Ensure users is always an array
       setPagination({
         ...pagination,
         count: response.count,
@@ -47,6 +47,7 @@ const AdminUsers: React.FC = () => {
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || t('admin.users.loadError'));
+      setUsers([]); // Reset users to empty array on error
     } finally {
       setLoading(false);
     }
@@ -55,15 +56,6 @@ const AdminUsers: React.FC = () => {
   useEffect(() => {
     fetchUsers();
   }, [searchTerm, filterActive, filterStaff]);
-
-  const handleUserUpdate = async (userId: number, updates: Partial<AdminUser>) => {
-    try {
-      const updatedUser = await adminAPI.users.update(userId, updates);
-      setUsers(users.map(user => user.id === userId ? updatedUser : user));
-    } catch (err: any) {
-      setError(err.response?.data?.message || t('admin.users.updateError'));
-    }
-  };
 
   const handleUserDelete = async (userId: number) => {
     if (!confirm(t('admin.users.deleteConfirm'))) return;

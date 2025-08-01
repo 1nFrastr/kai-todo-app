@@ -31,7 +31,8 @@ const UserTable: React.FC<UserTableProps> = ({
     );
   }
 
-  if (users.length === 0) {
+  // Handle case where users is undefined or null
+  if (!users || users.length === 0) {
     return (
       <div className="user-table-empty">
         <p>{t('admin.users.noUsers')}</p>
