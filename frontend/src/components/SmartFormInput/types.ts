@@ -26,6 +26,8 @@ export interface SmartFormInputProps {
   // AI configuration
   customPrompt?: string; // Custom prompt prefix
   preserveExistingValues?: boolean; // Whether to preserve existing values
+  aiPromptPlaceholder?: string; // AI prompt panel placeholder text
+  onAIGenerate?: (prompt: string) => Promise<string>; // Custom AI generation function
   
   // Callback functions
   onBeforeGenerate?: (fields: FormField[]) => boolean; // Pre-generation callback
@@ -37,6 +39,11 @@ export interface UseSmartFormInputReturn {
   generateFormContent: (
     formElement: HTMLFormElement,
     options: SmartFormInputOptions
+  ) => Promise<void>;
+  generateFormContentWithPrompt: (
+    formElement: HTMLFormElement,
+    userPrompt: string,
+    options?: Omit<SmartFormInputOptions, 'customPrompt'>
   ) => Promise<void>;
   isGenerating: boolean;
   error: string | null;

@@ -92,8 +92,21 @@ export const useSmartFormInput = (): UseSmartFormInputReturn => {
     }
   };
 
+  const generateFormContentWithPrompt = async (
+    formElement: HTMLFormElement,
+    userPrompt: string,
+    options: Omit<SmartFormInputOptions, 'customPrompt'> = {}
+  ): Promise<void> => {
+    // Use the user prompt as the custom prompt
+    return generateFormContent(formElement, {
+      ...options,
+      customPrompt: userPrompt
+    });
+  };
+
   return {
     generateFormContent,
+    generateFormContentWithPrompt,
     isGenerating,
     error
   };

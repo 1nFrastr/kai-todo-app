@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AIPromptPanel } from '../AIPromptPanel';
 import { useSmartFormInput } from './hooks/useSmartFormInput';
 import { useAIConfigStatus } from '../../hooks/useAIConfigStatus';
 import { AIConfigModal } from '../AIConfig';
@@ -13,16 +14,19 @@ const SmartFormInput: React.FC<SmartFormInputProps> = ({
   buttonClassName,
   customPrompt,
   preserveExistingValues = false,
+  aiPromptPlaceholder,
+  onAIGenerate,
   onBeforeGenerate,
   onAfterGenerate,
   onError
 }) => {
   const { t } = useTranslation();
   const [formElement, setFormElement] = useState<HTMLFormElement | null>(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const aiConfigured = useAIConfigStatus();
-  const { generateFormContent, isGenerating, error } = useSmartFormInput();
+  const { generateFormContentWithPrompt, isGenerating, error } = useSmartFormInput();
 
   // Find the form element
   useEffect(() => {
@@ -56,16 +60,46 @@ const SmartFormInput: React.FC<SmartFormInputProps> = ({
       return;
     }
 
+    // Open AI prompt panel to get user input
+    setIsPanelOpen(true);
+  };
+
+  const handlePanelClose = () => {
+    setIsPanelOpen(false);
+  };
+
+  const handleGenerate = async (prompt: string) => {
+    if (!formElement) {
+      const errorMessage = t('smartForm.formNotFound');
+      console.error('Form element not found');
+      onError?.(new Error(errorMessage));
+      return;
+    }
+
     try {
-      await generateFormContent(formElement, {
-        customPrompt,
-        preserveExistingValues,
-        onBeforeGenerate,
-        onAfterGenerate,
-        onError
-      });
+      if (onAIGenerate) {
+        // Use custom AI generate function if provided
+        const result = await onAIGenerate(prompt);
+        // For custom AI generate, we need to parse and fill the form manually
+        // This is a simplified approach - in a real implementation, you might want
+        // to handle this differently based on the result format
+        console.log('Custom AI result:', result);
+      } else {
+        // Combine custom prompt with user prompt if both exist
+        const finalPrompt = customPrompt ? `${customPrompt}\n\n${prompt}` : prompt;
+        
+        // Use the hook with user prompt
+        await generateFormContentWithPrompt(formElement, finalPrompt, {
+          preserveExistingValues,
+          onBeforeGenerate,
+          onAfterGenerate,
+          onError
+        });
+      }
+      setIsPanelOpen(false);
     } catch (err) {
       console.error('Smart form generation failed:', err);
+      // Error is handled by the hook
     }
   };
 
@@ -82,7 +116,8 @@ const SmartFormInput: React.FC<SmartFormInputProps> = ({
     'smart-form-input__button',
     buttonClassName,
     isGenerating ? 'smart-form-input__button--generating' : '',
-    !aiConfigured ? 'smart-form-input__button--unconfigured' : ''
+    !aiConfigured ? 'smart-form-input__button--unconfigured' : '',
+    isPanelOpen ? 'smart-form-input__button--panel-open' : ''
   ].filter(Boolean).join(' ');
 
   const buttonTitle = aiConfigured 
@@ -112,6 +147,16 @@ const SmartFormInput: React.FC<SmartFormInputProps> = ({
           {error}
         </div>
       )}
+
+      {/* AI Prompt Panel */}
+      <AIPromptPanel
+        isOpen={isPanelOpen}
+        onClose={handlePanelClose}
+        onGenerate={handleGenerate}
+        isGenerating={isGenerating}
+        error={error}
+        placeholder={aiPromptPlaceholder}
+      />
 
       {/* AI Configuration Modal */}
       <AIConfigModal

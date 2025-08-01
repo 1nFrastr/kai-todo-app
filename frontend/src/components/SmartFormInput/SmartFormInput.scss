@@ -48,6 +48,12 @@
       }
     }
 
+    &--panel-open {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
     // Dark mode support
     [data-theme="dark"] & {
       background: var(--color-background-dark);
@@ -72,6 +78,12 @@
           border-color: var(--color-error-dark);
           color: var(--color-error-dark);
         }
+      }
+
+      &.smart-form-input__button--panel-open {
+        background: var(--color-primary-dark-light);
+        border-color: var(--color-primary-dark);
+        color: var(--color-primary-dark);
       }
     }
   }
