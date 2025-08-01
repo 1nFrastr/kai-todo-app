@@ -18,6 +18,7 @@
 - 必须使用pip作为包管理器
 - 必须使用Django作为后端框架
 - 必须使用Django REST Framework作为API框架
+- 所有后端项目相关的CLI，在首次打开CLI会话前，必须先进入虚拟环境再执行操作，使用命令 source ./backend/venv/Scripts/activate 
 
 ## 数据库
 
