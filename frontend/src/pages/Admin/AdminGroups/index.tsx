@@ -15,10 +15,18 @@ const AdminGroups: React.FC = () => {
       try {
         setLoading(true);
         const response = await adminAPI.groups.list();
-        setGroups(response);
+        // Ensure the response is always an array
+        if (Array.isArray(response)) {
+          setGroups(response);
+        } else {
+          console.error('Expected array from groups API but got:', response);
+          setGroups([]);
+        }
         setError(null);
       } catch (err: any) {
+        console.error('Error fetching groups:', err);
         setError(err.response?.data?.message || t('admin.groups.loadError'));
+        setGroups([]); // Ensure groups is always an array
       } finally {
         setLoading(false);
       }
@@ -62,7 +70,7 @@ const AdminGroups: React.FC = () => {
         </button>
       </div>
 
-      {groups.length === 0 ? (
+      {!Array.isArray(groups) || groups.length === 0 ? (
         <div className="empty-state">
           <p>{t('admin.groups.noGroups')}</p>
         </div>
