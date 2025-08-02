@@ -48,7 +48,7 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
         {
           path: 'login',
           element: (
-            <AuthLayout theme={theme} onThemeChange={onThemeChange}>
+            <AuthLayout theme={theme}>
               <AdminLoginPage />
             </AuthLayout>
           ),
@@ -56,7 +56,7 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
         {
           path: 'register',
           element: (
-            <AuthLayout theme={theme} onThemeChange={onThemeChange}>
+            <AuthLayout theme={theme}>
               <AdminRegisterPage />
             </AuthLayout>
           ),

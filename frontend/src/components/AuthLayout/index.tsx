@@ -6,10 +6,9 @@ import './AuthLayout.scss';
 interface AuthLayoutProps {
   children: React.ReactNode;
   theme: 'light' | 'dark';
-  onThemeChange: (theme: 'light' | 'dark') => void;
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ children, theme, onThemeChange }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children, theme }) => {
   const { t } = useTranslation();
 
   return (
