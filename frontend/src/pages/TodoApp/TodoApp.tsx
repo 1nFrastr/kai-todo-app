@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Todo } from '../../types/todo';
 import { todoAPI } from '../../services/api';
+import { useAuthStore } from '../../stores/authStore';
 import TodoForm from '../../components/TodoForm';
 import TodoList from '../../components/TodoList';
 import TodoFilter from '../../components/TodoFilter';
@@ -9,6 +10,7 @@ import './TodoApp.scss';
 
 const TodoApp: React.FC = () => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuthStore();
   const [todos, setTodos] = useState<Todo[]>([]);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [filter, setFilter] = useState<'all' | 'pending' | 'completed'>('all');
@@ -118,6 +120,13 @@ const TodoApp: React.FC = () => {
         <h1>{t('appTitle')}</h1>
         <p>{t('appSubtitle')}</p>
       </header>
+
+      {/* Anonymous user warning */}
+      {!isAuthenticated && (
+        <div className="anonymous-warning">
+          {t('anonymousWarning')}
+        </div>
+      )}
 
       {error && (
         <div className="error-message">

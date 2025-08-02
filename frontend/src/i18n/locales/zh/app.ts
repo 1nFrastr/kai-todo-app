@@ -136,5 +136,40 @@ export const app = {
     rateLimitExceeded: "请求频率超限",
     serverError: "服务器错误",
     invalidResponse: "响应格式无效"
+  },
+
+  // User authentication
+  auth: {
+    login: "登录",
+    register: "注册", 
+    logout: "退出登录",
+    loginTitle: "用户登录",
+    registerTitle: "用户注册",
+    welcomeBack: "欢迎回来",
+    createAccount: "创建新账户",
+    alreadyHaveAccount: "已有账户？点击登录",
+    noAccount: "还没有账户？点击注册",
+    username: "用户名",
+    usernamePlaceholder: "请输入用户名",
+    email: "邮箱",
+    emailPlaceholder: "请输入邮箱地址",
+    password: "密码",
+    passwordPlaceholder: "请输入密码",
+    confirmPassword: "确认密码",
+    confirmPasswordPlaceholder: "请再次输入密码",
+    firstName: "名字",
+    firstNamePlaceholder: "请输入名字",
+    lastName: "姓氏",
+    lastNamePlaceholder: "请输入姓氏",
+    rememberMe: "记住我",
+    loginButton: "登录",
+    registerButton: "注册",
+    loggingIn: "登录中...",
+    registering: "注册中...",
+    loginSuccess: "登录成功",
+    registerSuccess: "注册成功",
+    logoutSuccess: "退出登录成功",
+    passwordMismatch: "密码不匹配",
+    userInfo: "用户信息"
   }
 };

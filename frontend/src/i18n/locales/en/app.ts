@@ -38,7 +38,7 @@ export const app = {
   toggleError: "Failed to update todo status",
   deleteError: "Failed to delete todo",
   deleteConfirm: "Are you sure you want to delete this todo?",
-  
+
   // Theme
   theme: "Theme",
   lightMode: "Light Mode",
@@ -136,5 +136,40 @@ export const app = {
     rateLimitExceeded: "Rate limit exceeded",
     serverError: "Server error",
     invalidResponse: "Invalid response format"
+  },
+
+  // User authentication
+  auth: {
+    login: "Login",
+    register: "Register", 
+    logout: "Logout",
+    loginTitle: "User Login",
+    registerTitle: "User Register",
+    welcomeBack: "Welcome Back",
+    createAccount: "Create New Account",
+    alreadyHaveAccount: "Already have an account? Login here",
+    noAccount: "Don't have an account? Register here",
+    username: "Username",
+    usernamePlaceholder: "Enter your username",
+    email: "Email",
+    emailPlaceholder: "Enter your email address",
+    password: "Password",
+    passwordPlaceholder: "Enter your password",
+    confirmPassword: "Confirm Password",
+    confirmPasswordPlaceholder: "Confirm your password",
+    firstName: "First Name",
+    firstNamePlaceholder: "Enter your first name",
+    lastName: "Last Name",
+    lastNamePlaceholder: "Enter your last name",
+    rememberMe: "Remember me",
+    loginButton: "Login",
+    registerButton: "Register",
+    loggingIn: "Logging in...",
+    registering: "Registering...",
+    loginSuccess: "Login successful",
+    registerSuccess: "Registration successful",
+    logoutSuccess: "Logout successful",
+    passwordMismatch: "Passwords do not match",
+    userInfo: "User Info"
   }
 };
