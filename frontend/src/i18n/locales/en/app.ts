@@ -17,6 +17,7 @@ export const app = {
   
   // Todo Item
   createdAt: "Created at: ",
+  anonymous: "Anonymous",
   editButtonText: "Edit",
   deleteButtonText: "Delete",
   

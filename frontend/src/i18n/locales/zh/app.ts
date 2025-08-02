@@ -17,6 +17,7 @@ export const app = {
   
   // Todo Item
   createdAt: "创建于: ",
+  anonymous: "匿名",
   editButtonText: "编辑",
   deleteButtonText: "删除",
   

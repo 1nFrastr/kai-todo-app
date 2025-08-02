@@ -33,7 +33,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete, onEdit })
             <p className="todo-description">{todo.description}</p>
           )}
           <span className="todo-date">
-            {t('createdAt')}{formatDate(todo.created_at)}
+            {t('createdAt')}{formatDate(todo.created_at)} | {todo.created_by === 'Anonymous' ? t('anonymous') : todo.created_by}
           </span>
         </div>
       </div>
