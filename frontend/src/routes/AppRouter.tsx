@@ -8,6 +8,7 @@ import AdminDashboard from '../pages/Admin/AdminDashboard';
 import AdminUsers from '../pages/Admin/AdminUsers';
 import AdminGroups from '../pages/Admin/AdminGroups';
 import AdminProfile from '../pages/Admin/AdminProfile';
+import AdminTodos from '../pages/Admin/AdminTodos';
 import AdminLayout from '../components/AdminLayout';
 import AuthLayout from '../components/AuthLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -87,6 +88,16 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
             <ProtectedRoute requiredRole="superuser">
               <AdminLayout theme={theme} onThemeChange={onThemeChange}>
                 <AdminGroups />
+              </AdminLayout>
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'todos',
+          element: (
+            <ProtectedRoute>
+              <AdminLayout theme={theme} onThemeChange={onThemeChange}>
+                <AdminTodos />
               </AdminLayout>
             </ProtectedRoute>
           ),

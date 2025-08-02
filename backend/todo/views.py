@@ -1,9 +1,11 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth.models import User
+from django.db.models import Q
 from .models import Todo
-from .serializers import TodoSerializer
+from .serializers import TodoSerializer, TodoAdminSerializer
 
 
 class TodoViewSet(viewsets.ModelViewSet):
@@ -58,3 +60,45 @@ class TodoViewSet(viewsets.ModelViewSet):
         pending_todos = self.get_queryset().filter(completed=False)
         serializer = self.get_serializer(pending_todos, many=True)
         return Response(serializer.data)
+
+
+class TodoAdminListView(generics.ListAPIView):
+    """
+    Admin view for Todo management - read-only access with search and filtering
+    Supports different permission levels based on user role
+    """
+    serializer_class = TodoAdminSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Return todos based on user permissions:
+        - Superuser/Staff: can see all todos
+        - Regular users: can only see their own todos
+        """
+        queryset = Todo.objects.all()
+        
+        # Regular users can only see their own todos
+        if not (self.request.user.is_superuser or self.request.user.is_staff):
+            queryset = queryset.filter(user=self.request.user)
+        
+        # Apply search filter
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(title__icontains=search)
+        
+        # Apply status filter
+        status_filter = self.request.query_params.get('status', None)
+        if status_filter == 'completed':
+            queryset = queryset.filter(completed=True)
+        elif status_filter == 'pending':
+            queryset = queryset.filter(completed=False)
+        
+        # Apply ordering
+        ordering = self.request.query_params.get('ordering', '-created_at')
+        if ordering in ['created_at', '-created_at', 'updated_at', '-updated_at', 'title', '-title']:
+            queryset = queryset.order_by(ordering)
+        else:
+            queryset = queryset.order_by('-created_at')
+        
+        return queryset

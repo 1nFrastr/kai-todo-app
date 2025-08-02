@@ -42,6 +42,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
       requiredRole: 'superuser',
     },
     {
+      path: '/admin/todos',
+      label: t('todo.admin.title'),
+      icon: '📝',
+      requiredRole: null,
+    },
+    {
       path: '/admin/profile',
       label: t('admin.profileMenu'),
       icon: '👤',

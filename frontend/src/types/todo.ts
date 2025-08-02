@@ -18,3 +18,28 @@ export interface UpdateTodo {
   description?: string;
   completed?: boolean;
 }
+
+export interface AdminTodo {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+  creator_username: string;
+  creator_id: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TodoFilters {
+  search: string;
+  status: 'all' | 'completed' | 'pending';
+  ordering: string;
+}
+
+export interface TodoAdminParams {
+  page?: number;
+  page_size?: number;
+  search?: string;
+  status?: string;
+  ordering?: string;
+}
