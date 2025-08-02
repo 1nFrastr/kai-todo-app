@@ -11,9 +11,9 @@ const AdminRegisterPage: React.FC = () => {
   const { register, isAuthenticated, error, clearError, user } = useAuthStore();
   
   const [formData, setFormData] = useState<RegisterData>({
-    username: 'admin',
-    password: 'password123',
-    password_confirm: 'password123',
+    username: '',
+    password: '',
+    password_confirm: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

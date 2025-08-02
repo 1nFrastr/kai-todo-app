@@ -13,7 +13,7 @@ const AdminLoginPage: React.FC = () => {
   
   const [credentials, setCredentials] = useState<LoginCredentials>({
     username: 'admin',
-    password: 'admin',
+    password: 'admin123',
   });
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
