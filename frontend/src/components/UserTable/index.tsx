@@ -59,10 +59,8 @@ const UserTable: React.FC<UserTableProps> = ({
           {users.map((user) => (
             <tr key={user.id} className={!user.is_active ? 'inactive' : ''}>
               <td>{user.id}</td>
-              <td className="username-cell">
-                <span className="username">{user.username}</span>
-                {user.is_superuser && <span className="badge superuser">👑</span>}
-                {user.is_staff && !user.is_superuser && <span className="badge staff">🛠️</span>}
+              <td>
+                {user.username}
               </td>
               <td>{user.email}</td>
               <td>{`${user.first_name} ${user.last_name}`.trim() || '-'}</td>
