@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type { AxiosResponse } from 'axios';
+import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import api from './api'; // Use the shared api instance with language headers
 import type { 
   User, 
   LoginCredentials, 
@@ -13,73 +14,25 @@ import type {
   PaginatedResponse
 } from '../types/auth';
 
-// Create axios instance
-const api = axios.create({
+// Create separate auth api instance for auth endpoints (no auth required)
+const authApi = axios.create({
   baseURL: 'http://localhost:8000/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor to add auth token
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+// Request interceptor to add language header (no auth token for auth endpoints)
+authApi.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    // Get language synchronously from localStorage or default to 'en'
+    const language = localStorage.getItem('i18nextLng') || 'en';
+    if (config.headers) {
+      config.headers['Accept-Language'] = language;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-// Response interceptor to handle token refresh
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const original = error.config;
-    
-    console.log('🔄 AuthAPI: Response interceptor - status:', error.response?.status, 'url:', original?.url);
-    
-    if (error.response?.status === 401 && !original._retry) {
-      console.log('🔄 AuthAPI: 401 error detected, attempting token refresh');
-      original._retry = true;
-      
-      const refreshToken = localStorage.getItem('refresh_token');
-      if (refreshToken) {
-        try {
-          console.log('🔄 AuthAPI: Attempting to refresh token');
-          const response = await axios.post('http://localhost:8000/api/auth/refresh/', {
-            refresh: refreshToken,
-          });
-          
-          const { access } = response.data;
-          localStorage.setItem('access_token', access);
-          console.log('🔄 AuthAPI: Token refreshed successfully, retrying original request');
-          
-          // Retry original request
-          original.headers.Authorization = `Bearer ${access}`;
-          return api(original);
-        } catch (refreshError) {
-          console.error('🔄 AuthAPI: Token refresh failed:', refreshError);
-          // Refresh failed, clear tokens
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          
-          // Clear auth store state by dispatching a custom event
-          // This way we avoid circular dependencies
-          console.log('🔄 AuthAPI: Dispatching auth-token-expired event');
-          window.dispatchEvent(new CustomEvent('auth-token-expired'));
-          
-          return Promise.reject(refreshError);
-        }
-      } else {
-        console.log('🔄 AuthAPI: No refresh token available');
-      }
-    }
-    
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
@@ -88,19 +41,19 @@ api.interceptors.response.use(
 export const authAPI = {
   // Register new user
   register: async (data: RegisterData): Promise<AuthAPIResponse> => {
-    const response: AxiosResponse<AuthAPIResponse> = await api.post('/auth/register/', data);
+    const response: AxiosResponse<AuthAPIResponse> = await authApi.post('/auth/register/', data);
     return response.data;
   },
 
   // Login user
   login: async (credentials: LoginCredentials): Promise<AuthAPIResponse> => {
-    const response: AxiosResponse<AuthAPIResponse> = await api.post('/auth/login/', credentials);
+    const response: AxiosResponse<AuthAPIResponse> = await authApi.post('/auth/login/', credentials);
     return response.data;
   },
 
   // Logout user
   logout: async (refreshToken: string): Promise<void> => {
-    await api.post('/auth/logout/', { refresh: refreshToken });
+    await authApi.post('/auth/logout/', { refresh: refreshToken });
   },
 
   // Get user profile
@@ -137,7 +90,7 @@ export const authAPI = {
 
   // Refresh token
   refreshToken: async (refreshToken: string): Promise<{ access: string }> => {
-    const response: AxiosResponse<{ access: string }> = await api.post('/auth/refresh/', {
+    const response: AxiosResponse<{ access: string }> = await authApi.post('/auth/refresh/', {
       refresh: refreshToken,
     });
     return response.data;
