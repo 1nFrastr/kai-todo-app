@@ -20,6 +20,25 @@
   }
 }
 
+.auth-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-to-app {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+}
+
 .auth-logo {
   display: flex;
   align-items: center;

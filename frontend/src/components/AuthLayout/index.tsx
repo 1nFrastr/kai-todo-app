@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './AuthLayout.scss';
 
@@ -19,6 +20,12 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, theme, onThemeChange 
             <span className="logo-icon">🔐</span>
             {t('admin.title')}
           </h1>
+          
+          <div className="auth-header-actions">
+            <Link to="/" className="back-to-app">
+              {t('admin.backToApp')}
+            </Link>
+          </div>
         </div>
       </header>
       
