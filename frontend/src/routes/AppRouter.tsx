@@ -11,6 +11,7 @@ import AdminProfile from '../pages/Admin/AdminProfile';
 import AdminLayout from '../components/AdminLayout';
 import AuthLayout from '../components/AuthLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
+import AdminRedirect from '../components/AdminRedirect';
 
 interface AppRouterProps {
   theme: 'light' | 'dark';
@@ -42,7 +43,7 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
       children: [
         {
           index: true,
-          element: <Navigate to="/admin/dashboard" replace />,
+          element: <AdminRedirect />,
         },
         {
           path: 'login',
@@ -63,7 +64,7 @@ export const createAppRouter = ({ theme, onThemeChange }: AppRouterProps) => {
         {
           path: 'dashboard',
           element: (
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="staff">
               <AdminLayout theme={theme} onThemeChange={onThemeChange}>
                 <AdminDashboard />
               </AdminLayout>

@@ -4,6 +4,7 @@ export const admin = {
   logout: "Logout",
   staff: "Staff",
   superuser: "Superuser",
+  user: "User",
   dashboard: "Dashboard",
   userManagement: "User Management",
   groupManagement: "Group Management",

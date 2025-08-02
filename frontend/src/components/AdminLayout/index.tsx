@@ -56,12 +56,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
     return false;
   });
 
+  // Determine the logo link based on user permissions
+  const logoLink = user?.is_staff || user?.is_superuser ? '/admin/dashboard' : '/admin/profile';
+
   return (
     <div className="admin-layout" data-theme={theme}>
       <header className="admin-header">
         <div className="admin-header-content">
           <div className="admin-logo">
-            <Link to="/admin/dashboard">
+            <Link to={logoLink}>
               <span className="logo-icon">⚙️</span>
               {t('admin.title')}
             </Link>
@@ -73,7 +76,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
             </Link>
             <div className="user-menu">
               <span className="user-info">
-                {user?.username} ({t(user?.is_superuser ? 'admin.superuser' : 'admin.staff')})
+                {user?.username} ({t(user?.is_superuser ? 'admin.superuser' : user?.is_staff ? 'admin.staff' : 'admin.user')})
               </span>
               <button onClick={handleLogout} className="logout-btn">
                 {t('admin.logout')}

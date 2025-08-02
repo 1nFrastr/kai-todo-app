@@ -34,8 +34,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
   if (requiredRole) {
     console.log('🛡️ ProtectedRoute: Checking role requirement:', requiredRole, 'User roles - is_staff:', user.is_staff, 'is_superuser:', user.is_superuser);
     if (requiredRole === 'staff' && !user.is_staff) {
-      console.log('🛡️ ProtectedRoute: User lacks staff privileges, redirecting to login');
-      return <Navigate to="/admin/login" replace />;
+      console.log('🛡️ ProtectedRoute: User lacks staff privileges, redirecting to profile');
+      return <Navigate to="/admin/profile" replace />;
     }
     if (requiredRole === 'superuser' && !user.is_superuser) {
       console.log('🛡️ ProtectedRoute: User lacks superuser privileges, redirecting to dashboard');

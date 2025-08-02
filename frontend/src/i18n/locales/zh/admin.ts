@@ -4,6 +4,7 @@ export const admin = {
   logout: "退出登录",
   staff: "员工",
   superuser: "超级用户",
+  user: "普通用户",
   dashboard: "仪表板",
   userManagement: "用户管理",
   groupManagement: "权限组管理",

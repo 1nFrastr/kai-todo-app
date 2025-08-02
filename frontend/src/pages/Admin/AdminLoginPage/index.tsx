@@ -9,7 +9,7 @@ const AdminLoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated, error, clearError, isInitialized } = useAuthStore();
+  const { login, isAuthenticated, error, clearError, isInitialized, user } = useAuthStore();
   
   const [credentials, setCredentials] = useState<LoginCredentials>({
     username: 'admin',
@@ -19,17 +19,29 @@ const AdminLoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLocalLoading, setIsLocalLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || '/admin/dashboard';
+  const from = location.state?.from?.pathname;
 
   console.log('🔐 LoginPage: Render - isAuthenticated:', isAuthenticated, 'isInitialized:', isInitialized, 'from:', from);
 
   useEffect(() => {
     console.log('🔐 LoginPage: Auth state changed - isAuthenticated:', isAuthenticated, 'isInitialized:', isInitialized);
-    if (isAuthenticated && isInitialized) {
-      console.log('🔐 LoginPage: User is authenticated, navigating to:', from);
-      navigate(from, { replace: true });
+    if (isAuthenticated && isInitialized && user) {
+      // Determine redirect target based on user role and original destination
+      let redirectTo = from;
+      
+      if (!redirectTo) {
+        // Default redirect based on user permissions
+        if (user.is_staff || user.is_superuser) {
+          redirectTo = '/admin/dashboard';
+        } else {
+          redirectTo = '/admin/profile';
+        }
+      }
+      
+      console.log('🔐 LoginPage: User is authenticated, navigating to:', redirectTo);
+      navigate(redirectTo, { replace: true });
     }
-  }, [isAuthenticated, isInitialized, navigate, from]);
+  }, [isAuthenticated, isInitialized, navigate, from, user]);
 
   useEffect(() => {
     console.log('🔐 LoginPage: Component mounted, clearing errors');

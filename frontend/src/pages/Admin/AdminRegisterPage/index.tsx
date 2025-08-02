@@ -8,7 +8,7 @@ import './AdminRegisterPage.scss';
 const AdminRegisterPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register, isAuthenticated, error, clearError } = useAuthStore();
+  const { register, isAuthenticated, error, clearError, user } = useAuthStore();
   
   const [formData, setFormData] = useState<RegisterData>({
     username: 'admin',
@@ -20,10 +20,15 @@ const AdminRegisterPage: React.FC = () => {
   const [isLocalLoading, setIsLocalLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/admin/dashboard');
+    if (isAuthenticated && user) {
+      // Determine redirect target based on user role
+      if (user.is_staff || user.is_superuser) {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/admin/profile');
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, user]);
 
   useEffect(() => {
     clearError();
