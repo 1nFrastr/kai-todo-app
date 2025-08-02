@@ -4,6 +4,7 @@ import { adminAPI } from '../../../services/authAPI';
 import type { AdminUser, PaginatedResponse } from '../../../types/auth';
 import UserTable from '../../../components/UserTable';
 import UserForm from '../../../components/UserForm';
+import { useDebounce } from '../../../hooks';
 import './AdminUsers.scss';
 
 const AdminUsers: React.FC = () => {
@@ -16,6 +17,10 @@ const AdminUsers: React.FC = () => {
   const [filterStaff, setFilterStaff] = useState<boolean | null>(null);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [showUserForm, setShowUserForm] = useState(false);
+  
+  // Debounce search term with 500ms delay
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  
   const [pagination, setPagination] = useState({
     count: 0,
     next: null as string | null,
@@ -31,7 +36,7 @@ const AdminUsers: React.FC = () => {
       params.append('page', page.toString());
       params.append('page_size', pagination.pageSize.toString());
       
-      if (searchTerm) params.append('search', searchTerm);
+      if (debouncedSearchTerm) params.append('search', debouncedSearchTerm);
       if (filterActive !== null) params.append('is_active', filterActive.toString());
       if (filterStaff !== null) params.append('is_staff', filterStaff.toString());
 
@@ -55,7 +60,7 @@ const AdminUsers: React.FC = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [searchTerm, filterActive, filterStaff]);
+  }, [debouncedSearchTerm, filterActive, filterStaff]);
 
   const handleUserDelete = async (userId: number) => {
     if (!confirm(t('admin.users.deleteConfirm'))) return;

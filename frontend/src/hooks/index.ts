@@ -2,3 +2,4 @@
 export { useAIConfigStatus } from './useAIConfigStatus';
 export { useAIConfig } from './useAIConfig';
 export { useSidebar } from './useSidebar';
+export { useDebounce } from './useDebounce';
