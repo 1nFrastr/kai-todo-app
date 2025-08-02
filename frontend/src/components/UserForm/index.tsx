@@ -75,8 +75,12 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
       let savedUser: AdminUser;
       
       if (user) {
-        // Update existing user - exclude password field entirely
-        const { password, ...updateData } = formData;
+        // Update existing user - include password only if provided
+        const updateData = { ...formData };
+        if (!formData.password || formData.password.trim() === '') {
+          // Remove password field if empty
+          delete updateData.password;
+        }
         savedUser = await adminAPI.users.update(user.id, updateData);
       } else {
         // Create new user
@@ -203,22 +207,22 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
             </div>
           </div>
 
-          {!user && (
-            <div className="form-group">
-              <label htmlFor="password">
-                {t('admin.users.form.password')} *
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password || ''}
-                onChange={handleChange}
-                required
-                autoComplete="new-password"
-              />
-            </div>
-          )}
+          <div className="form-group">
+            <label htmlFor="password">
+              {t('admin.users.form.password')} {!user && '*'}
+              {user && <small className="password-hint">({t('admin.users.form.passwordHint')})</small>}
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password || ''}
+              onChange={handleChange}
+              required={!user}
+              autoComplete={user ? "new-password" : "new-password"}
+              placeholder={user ? t('admin.users.form.passwordPlaceholder') : ''}
+            />
+          </div>
 
           <div className="form-section">
             <h3>{t('admin.users.form.permissions')}</h3>

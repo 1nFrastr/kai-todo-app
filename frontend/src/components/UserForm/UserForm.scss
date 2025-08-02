@@ -142,6 +142,13 @@
     font-weight: 500;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
+    
+    .password-hint {
+      font-weight: 400;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
   }
   
   input[type="text"],
