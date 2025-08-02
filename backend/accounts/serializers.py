@@ -119,13 +119,47 @@ class AdminUserSerializer(serializers.ModelSerializer):
     """Admin user management serializer"""
     profile = UserProfileSerializer(read_only=True)
     groups = serializers.StringRelatedField(many=True, read_only=True)
+    password = serializers.CharField(write_only=True, required=False, min_length=8)
     
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name',
                  'is_staff', 'is_superuser', 'is_active', 'date_joined', 
-                 'last_login', 'groups', 'profile']
+                 'last_login', 'groups', 'profile', 'password']
         read_only_fields = ['id', 'date_joined', 'last_login']
+    
+    def create(self, validated_data):
+        """Create user with hashed password"""
+        password = validated_data.pop('password', None)
+        user = User(**validated_data)
+        
+        if password:
+            user.set_password(password)
+        else:
+            # Set a default password if none provided
+            user.set_password('DefaultPassword123!')
+        
+        user.save()
+        
+        # Create user profile
+        UserProfile.objects.get_or_create(user=user)
+        
+        return user
+    
+    def update(self, instance, validated_data):
+        """Update user, handle password separately"""
+        password = validated_data.pop('password', None)
+        
+        # Update user fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        # Update password if provided
+        if password:
+            instance.set_password(password)
+        
+        instance.save()
+        return instance
 
 
 class GroupSerializer(serializers.ModelSerializer):
