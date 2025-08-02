@@ -8,7 +8,7 @@ import './AdminRegisterPage.scss';
 const AdminRegisterPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register, isAuthenticated, isLoading, error, clearError } = useAuthStore();
+  const { register, isAuthenticated, error, clearError } = useAuthStore();
   
   const [formData, setFormData] = useState<RegisterData>({
     username: 'admin',
@@ -20,6 +20,7 @@ const AdminRegisterPage: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLocalLoading, setIsLocalLoading] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -38,9 +39,14 @@ const AdminRegisterPage: React.FC = () => {
       return;
     }
 
-    await register(formData);
-    // If registration was successful, navigation will be handled by useEffect
-    // If it failed, the error will be displayed via the error state from store
+    setIsLocalLoading(true);
+    try {
+      await register(formData);
+      // If registration was successful, navigation will be handled by useEffect
+      // If it failed, the error will be displayed via the error state from store
+    } finally {
+      setIsLocalLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,10 +184,10 @@ const AdminRegisterPage: React.FC = () => {
 
           <button
             type="submit"
-            disabled={isLoading || !isFormValid}
+            disabled={isLocalLoading || !isFormValid}
             className="register-button"
           >
-            {isLoading ? t('admin.register.registering') : t('admin.register.registerButton')}
+            {isLocalLoading ? t('admin.register.registering') : t('admin.register.registerButton')}
           </button>
         </form>
 

@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthState>()(
       // Actions
       login: async (credentials: LoginCredentials) => {
         console.log('🔑 AuthStore: Starting login process');
-        set({ isLoading: true, error: null });
+        // Don't set global loading state for login operations
         
         try {
           const response = await authAPI.login(credentials);
@@ -68,7 +68,7 @@ export const useAuthStore = create<AuthState>()(
             set({
               user: null,
               isAuthenticated: false,
-              isLoading: false,
+              isLoading: false,  // Ensure loading is false after failed login
               error: errorMessage,
               isInitialized: true,
             });
@@ -118,7 +118,7 @@ export const useAuthStore = create<AuthState>()(
 
       register: async (data: RegisterData) => {
         console.log('📝 AuthStore: Starting registration process');
-        set({ isLoading: true, error: null });
+        // Don't set global loading state for register operations
         
         try {
           const response = await authAPI.register(data);

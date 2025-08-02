@@ -9,14 +9,15 @@ const AdminLoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated, isLoading, error, clearError, isInitialized } = useAuthStore();
+  const { login, isAuthenticated, error, clearError, isInitialized } = useAuthStore();
   
   const [credentials, setCredentials] = useState<LoginCredentials>({
-    username: '',
-    password: '',
+    username: 'admin',
+    password: 'admin',
   });
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLocalLoading, setIsLocalLoading] = useState(false);
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
@@ -41,12 +42,17 @@ const AdminLoginPage: React.FC = () => {
       return;
     }
 
-    const result = await login(credentials);
-    if (result && rememberMe) {
-      localStorage.setItem('remember_me', 'true');
+    setIsLocalLoading(true);
+    try {
+      const result = await login(credentials);
+      if (result && rememberMe) {
+        localStorage.setItem('remember_me', 'true');
+      }
+      // If login was successful, navigation will be handled by useEffect
+      // If it failed, the error will be displayed via the error state from store
+    } finally {
+      setIsLocalLoading(false);
     }
-    // If login was successful, navigation will be handled by useEffect
-    // If it failed, the error will be displayed via the error state from store
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,10 +125,10 @@ const AdminLoginPage: React.FC = () => {
 
           <button
             type="submit"
-            disabled={isLoading || !credentials.username || !credentials.password}
+            disabled={isLocalLoading || !credentials.username || !credentials.password}
             className="login-button"
           >
-            {isLoading ? t('admin.login.loggingIn') : t('admin.login.loginButton')}
+            {isLocalLoading ? t('admin.login.loggingIn') : t('admin.login.loginButton')}
           </button>
         </form>
 
