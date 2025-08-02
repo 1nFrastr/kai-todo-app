@@ -188,10 +188,7 @@ export const useAuthStore = create<AuthState>()(
                 .map(([field, messages]) => {
                   const errorList = Array.isArray(messages) ? messages : [messages];
                   const fieldName = field === 'username' ? 'Username' :
-                                   field === 'email' ? 'Email' :
-                                   field === 'password' ? 'Password' :
-                                   field === 'first_name' ? 'First Name' :
-                                   field === 'last_name' ? 'Last Name' : field;
+                                   field === 'password' ? 'Password' : field;
                   return `${fieldName}: ${errorList.join(', ')}`;
                 })
                 .join('; ');

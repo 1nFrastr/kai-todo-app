@@ -12,9 +12,6 @@ const AdminRegisterPage: React.FC = () => {
   
   const [formData, setFormData] = useState<RegisterData>({
     username: 'admin',
-    email: 'testusername@example.com',
-    first_name: 'Test',
-    last_name: 'User',
     password: 'password123',
     password_confirm: 'password123',
   });
@@ -61,8 +58,7 @@ const AdminRegisterPage: React.FC = () => {
   };
 
   const isPasswordMatch = formData.password === formData.password_confirm;
-  const isFormValid = formData.username && formData.email && formData.first_name && 
-                     formData.last_name && formData.password && formData.password_confirm &&
+  const isFormValid = formData.username && formData.password && formData.password_confirm &&
                      isPasswordMatch;
 
   return (
@@ -74,36 +70,6 @@ const AdminRegisterPage: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="register-form">
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="first_name">{t('admin.register.firstName')}</label>
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                placeholder={t('admin.register.firstNamePlaceholder')}
-                required
-                autoComplete="given-name"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="last_name">{t('admin.register.lastName')}</label>
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-                placeholder={t('admin.register.lastNamePlaceholder')}
-                required
-                autoComplete="family-name"
-              />
-            </div>
-          </div>
-
           <div className="form-group">
             <label htmlFor="username">{t('admin.register.username')}</label>
             <input
@@ -115,20 +81,6 @@ const AdminRegisterPage: React.FC = () => {
               placeholder={t('admin.register.usernamePlaceholder')}
               required
               autoComplete="username"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">{t('admin.register.email')}</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder={t('admin.register.emailPlaceholder')}
-              required
-              autoComplete="email"
             />
           </div>
 
