@@ -71,7 +71,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
             <Link to="/" className="back-to-app">
               {t('admin.backToApp')}
             </Link>
-            <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
             <div className="user-menu">
               <span className="user-info">
                 {user?.username} ({t(user?.is_superuser ? 'admin.superuser' : 'admin.staff')})
@@ -101,6 +100,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, theme, onThemeChang
               ))}
             </ul>
           </nav>
+          <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
         </aside>
 
         <main className="admin-main">
