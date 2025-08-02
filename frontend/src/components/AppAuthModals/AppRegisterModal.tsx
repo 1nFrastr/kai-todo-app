@@ -15,9 +15,6 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose }) => {
   
   const [formData, setFormData] = useState<RegisterData>({
     username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
     password: '',
     password_confirm: '',
   });
@@ -86,8 +83,7 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose }) => {
   };
 
   const isPasswordMatch = formData.password === formData.password_confirm;
-  const isFormValid = formData.username && formData.email && formData.first_name && 
-                     formData.last_name && formData.password && formData.password_confirm &&
+  const isFormValid = formData.username && formData.password && formData.password_confirm &&
                      isPasswordMatch;
 
   return (
@@ -114,38 +110,6 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose }) => {
 
         <div className="modal-body">
           <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="first_name">{t('auth.firstName')}</label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  placeholder={t('auth.firstNamePlaceholder')}
-                  required
-                  autoComplete="given-name"
-                  disabled={isLoading}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="last_name">{t('auth.lastName')}</label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  placeholder={t('auth.lastNamePlaceholder')}
-                  required
-                  autoComplete="family-name"
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-
             <div className="form-group">
               <label htmlFor="username">{t('auth.username')}</label>
               <input
@@ -157,21 +121,6 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose }) => {
                 placeholder={t('auth.usernamePlaceholder')}
                 required
                 autoComplete="username"
-                disabled={isLoading}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">{t('auth.email')}</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder={t('auth.emailPlaceholder')}
-                required
-                autoComplete="email"
                 disabled={isLoading}
               />
             </div>
