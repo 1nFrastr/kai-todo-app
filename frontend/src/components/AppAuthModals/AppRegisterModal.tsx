@@ -9,7 +9,7 @@ interface AppRegisterModalProps {
   onSwitchToLogin: () => void;
 }
 
-const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose, onSwitchToLogin }) => {
+const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const { register, error, clearError, isAuthenticated } = useAuthStore();
   

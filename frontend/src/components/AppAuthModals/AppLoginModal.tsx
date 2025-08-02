@@ -9,7 +9,7 @@ interface AppLoginModalProps {
   onSwitchToRegister: () => void;
 }
 
-const AppLoginModal: React.FC<AppLoginModalProps> = ({ onClose, onSwitchToRegister }) => {
+const AppLoginModal: React.FC<AppLoginModalProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const { login, error, clearError, isAuthenticated } = useAuthStore();
   
