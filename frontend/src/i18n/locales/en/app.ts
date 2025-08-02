@@ -6,6 +6,7 @@ export const app = {
   // Form
   addNewTodo: "Add New Todo",
   editTodo: "Edit Todo",
+  anonymousWarning: "⚠️ In anonymous mode, your todos will be automatically deleted after 10 minutes. Please login for full features.",
   titleLabel: "Title *",
   titlePlaceholder: "Please enter todo title",
   descriptionLabel: "Description",

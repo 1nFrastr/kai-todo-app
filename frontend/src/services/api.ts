@@ -48,7 +48,11 @@ export const todoAPI = {
   // Get all todos
   getAllTodos: async (): Promise<Todo[]> => {
     const response = await api.get('/todos/');
-    return response.data;
+    // Handle DRF pagination format
+    if (response.data && response.data.results) {
+      return response.data.results;
+    }
+    return response.data || [];
   },
 
   // Create new todo
@@ -77,13 +81,21 @@ export const todoAPI = {
   // Get completed todos
   getCompletedTodos: async (): Promise<Todo[]> => {
     const response = await api.get('/todos/completed/');
-    return response.data;
+    // Handle DRF pagination format
+    if (response.data && response.data.results) {
+      return response.data.results;
+    }
+    return response.data || [];
   },
 
   // Get pending todos
   getPendingTodos: async (): Promise<Todo[]> => {
     const response = await api.get('/todos/pending/');
-    return response.data;
+    // Handle DRF pagination format
+    if (response.data && response.data.results) {
+      return response.data.results;
+    }
+    return response.data || [];
   },
 };
 

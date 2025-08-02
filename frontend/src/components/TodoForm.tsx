@@ -43,6 +43,11 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, editingTodo, onCancel }) 
 
   return (
     <div className="todo-form-container">
+      {/* Anonymous user warning */}
+      <div className="anonymous-warning">
+        <p>{t('anonymousWarning')}</p>
+      </div>
+      
       <form ref={formRef} onSubmit={handleSubmit} className="todo-form">
         <h2>{editingTodo ? t('editTodo') : t('addNewTodo')}</h2>
         

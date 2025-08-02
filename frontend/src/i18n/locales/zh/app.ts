@@ -6,6 +6,7 @@ export const app = {
   // Form
   addNewTodo: "添加新的待办事项",
   editTodo: "编辑待办事项",
+  anonymousWarning: "⚠️ 未登录状态下，您的待办事项将在10分钟后自动删除。请登录以体验完整功能。",
   titleLabel: "标题 *",
   titlePlaceholder: "请输入待办事项标题",
   descriptionLabel: "描述",

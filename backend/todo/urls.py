@@ -4,7 +4,7 @@ from .views import TodoViewSet
 
 # Create router and register TodoViewSet
 router = DefaultRouter()
-router.register(r'todos', TodoViewSet)
+router.register(r'todos', TodoViewSet, basename='todo')
 
 urlpatterns = [
     path('api/', include(router.urls)),
