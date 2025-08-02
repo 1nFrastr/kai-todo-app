@@ -113,8 +113,6 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose, onSwitchTo
         </div>
 
         <div className="modal-body">
-          <p className="modal-subtitle">{t('auth.createAccount')}</p>
-
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-row">
               <div className="form-group">
@@ -246,19 +244,6 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose, onSwitchTo
               {isLoading ? t('auth.registering') : t('auth.registerButton')}
             </button>
           </form>
-
-          <div className="modal-footer">
-            <p>
-              {t('auth.alreadyHaveAccount')}{' '}
-              <button 
-                onClick={onSwitchToLogin} 
-                className="auth-switch-btn"
-                disabled={isLoading}
-              >
-                {t('auth.login')}
-              </button>
-            </p>
-          </div>
         </div>
       </div>
     </div>

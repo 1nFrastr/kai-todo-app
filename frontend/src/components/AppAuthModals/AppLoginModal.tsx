@@ -106,8 +106,6 @@ const AppLoginModal: React.FC<AppLoginModalProps> = ({ onClose, onSwitchToRegist
         </div>
 
         <div className="modal-body">
-          <p className="modal-subtitle">{t('auth.welcomeBack')}</p>
-
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="username">{t('auth.username')}</label>
@@ -175,19 +173,6 @@ const AppLoginModal: React.FC<AppLoginModalProps> = ({ onClose, onSwitchToRegist
               {isLoading ? t('auth.loggingIn') : t('auth.loginButton')}
             </button>
           </form>
-
-          <div className="modal-footer">
-            <p>
-              {t('auth.noAccount')}{' '}
-              <button 
-                onClick={onSwitchToRegister} 
-                className="auth-switch-btn"
-                disabled={isLoading}
-              >
-                {t('auth.register')}
-              </button>
-            </p>
-          </div>
         </div>
       </div>
     </div>
