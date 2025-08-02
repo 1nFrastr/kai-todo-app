@@ -36,6 +36,27 @@ const TodoApp: React.FC = () => {
     loadTodos();
   }, [t]);
 
+  // Listen for user login events to refresh todos
+  useEffect(() => {
+    const handleUserLoggedIn = () => {
+      console.log('User logged in, refreshing todos...');
+      loadTodos();
+    };
+
+    const handleUserLoggedOut = () => {
+      console.log('User logged out, refreshing todos...');
+      loadTodos();
+    };
+
+    window.addEventListener('userLoggedIn', handleUserLoggedIn);
+    window.addEventListener('userLoggedOut', handleUserLoggedOut);
+    
+    return () => {
+      window.removeEventListener('userLoggedIn', handleUserLoggedIn);
+      window.removeEventListener('userLoggedOut', handleUserLoggedOut);
+    };
+  }, []);
+
   // Create new todo
   const handleCreateTodo = async (todoData: { title: string; description?: string }) => {
     try {

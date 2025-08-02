@@ -61,6 +61,9 @@ export const useAuthStore = create<AuthState>()(
             const { useFlashStore } = await import('./flashStore');
             useFlashStore.getState().showSuccess(response.message || 'Login successful');
             
+            // Dispatch custom event to notify components about successful login
+            window.dispatchEvent(new CustomEvent('userLoggedIn', { detail: authData.user }));
+            
             return authData;
           } else {
             // Handle error response
@@ -145,6 +148,9 @@ export const useAuthStore = create<AuthState>()(
             // Import flash store dynamically to avoid circular dependency
             const { useFlashStore } = await import('./flashStore');
             useFlashStore.getState().showSuccess(response.message || 'Registration successful');
+            
+            // Dispatch custom event to notify components about successful registration
+            window.dispatchEvent(new CustomEvent('userLoggedIn', { detail: authData.user }));
             
             return authData;
           } else {
@@ -237,6 +243,10 @@ export const useAuthStore = create<AuthState>()(
             error: null,
             isInitialized: true,
           });
+          
+          // Dispatch custom event to notify components about logout
+          window.dispatchEvent(new CustomEvent('userLoggedOut'));
+          
           console.log('🚪 AuthStore: Logout completed, user unauthenticated');
         }
       },
