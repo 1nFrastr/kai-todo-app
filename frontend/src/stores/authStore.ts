@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User, LoginCredentials, RegisterData, AuthResponse } from '../types/auth';
 import { authAPI } from '../services/authAPI';
+import { useFlashStore } from './flashStore';
 
 interface AuthState {
   // State
@@ -57,8 +58,7 @@ export const useAuthStore = create<AuthState>()(
             
             console.log('🔑 AuthStore: Login successful, user authenticated');
             
-            // Import flash store dynamically to avoid circular dependency
-            const { useFlashStore } = await import('./flashStore');
+            // Show success message
             useFlashStore.getState().showSuccess(response.message || 'Login successful');
             
             // Dispatch custom event to notify components about successful login
@@ -77,7 +77,6 @@ export const useAuthStore = create<AuthState>()(
             });
             
             // Show flash error message
-            const { useFlashStore } = await import('./flashStore');
             useFlashStore.getState().showError(errorMessage);
             
             return null;
@@ -112,7 +111,6 @@ export const useAuthStore = create<AuthState>()(
           });
           
           // Show flash error message
-          const { useFlashStore } = await import('./flashStore');
           useFlashStore.getState().showError(errorMessage);
           
           return null;
@@ -145,8 +143,7 @@ export const useAuthStore = create<AuthState>()(
             
             console.log('📝 AuthStore: Registration successful, user authenticated');
             
-            // Import flash store dynamically to avoid circular dependency
-            const { useFlashStore } = await import('./flashStore');
+            // Show success message
             useFlashStore.getState().showSuccess(response.message || 'Registration successful');
             
             // Dispatch custom event to notify components about successful registration
@@ -165,7 +162,6 @@ export const useAuthStore = create<AuthState>()(
             });
             
             // Show flash error message
-            const { useFlashStore } = await import('./flashStore');
             useFlashStore.getState().showError(errorMessage);
             
             return null;
@@ -209,7 +205,6 @@ export const useAuthStore = create<AuthState>()(
           });
           
           // Show flash error message
-          const { useFlashStore } = await import('./flashStore');
           useFlashStore.getState().showError(errorMessage);
           
           return null;
