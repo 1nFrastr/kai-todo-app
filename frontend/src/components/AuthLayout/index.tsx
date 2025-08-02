@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import ThemeLanguageToggle from '../ThemeLanguageToggle';
 import './AuthLayout.scss';
 
 interface AuthLayoutProps {
@@ -20,7 +19,6 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, theme, onThemeChange 
             <span className="logo-icon">🔐</span>
             {t('admin.title')}
           </h1>
-          <ThemeLanguageToggle theme={theme} onThemeChange={onThemeChange} />
         </div>
       </header>
       
