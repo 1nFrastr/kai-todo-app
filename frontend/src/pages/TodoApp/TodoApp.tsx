@@ -139,7 +139,6 @@ const TodoApp: React.FC = () => {
     <div className="todo-app">
       <header className="todo-header">
         <h1>{t('appTitle')}</h1>
-        <p>{t('appSubtitle')}</p>
       </header>
 
       {/* Anonymous user warning */}

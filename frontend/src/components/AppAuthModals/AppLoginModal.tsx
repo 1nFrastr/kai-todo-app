@@ -181,7 +181,7 @@ const AppLoginModal: React.FC<AppLoginModalProps> = ({ onClose, onSwitchToRegist
               {t('auth.noAccount')}{' '}
               <button 
                 onClick={onSwitchToRegister} 
-                className="switch-btn"
+                className="auth-switch-btn"
                 disabled={isLoading}
               >
                 {t('auth.register')}

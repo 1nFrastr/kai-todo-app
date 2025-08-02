@@ -277,7 +277,7 @@
   }
 }
 
-.switch-btn {
+.auth-switch-btn {
   background: none;
   border: none;
   color: var(--primary-color);
@@ -359,7 +359,7 @@
 
   .close-btn:focus,
   .submit-btn:focus,
-  .switch-btn:focus {
+  .auth-switch-btn:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
   }

@@ -252,7 +252,7 @@ const AppRegisterModal: React.FC<AppRegisterModalProps> = ({ onClose, onSwitchTo
               {t('auth.alreadyHaveAccount')}{' '}
               <button 
                 onClick={onSwitchToLogin} 
-                className="switch-btn"
+                className="auth-switch-btn"
                 disabled={isLoading}
               >
                 {t('auth.login')}
