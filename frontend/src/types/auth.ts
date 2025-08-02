@@ -52,6 +52,17 @@ export interface AuthResponse {
   refresh: string;
 }
 
+// New standardized API response format
+export interface APIResponse<T = any> {
+  success: boolean;
+  message: string;
+  data?: T;
+  errors?: Record<string, string[]>;
+}
+
+// Type for auth API responses
+export type AuthAPIResponse = APIResponse<AuthResponse>;
+
 export interface UserUpdateData {
   username: string;
   email: string;

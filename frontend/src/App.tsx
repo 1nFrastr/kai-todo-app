@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createAppRouter } from './routes';
 import { useAuthStore } from './stores/authStore';
+import { FlashMessageContainer } from './components/FlashMessage';
 import './App.scss';
 
 function App() {
@@ -38,7 +39,12 @@ function App() {
   }
 
   console.log('🚀 App: Rendering main application');
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <FlashMessageContainer />
+    </>
+  );
 }
 
 export default App;

@@ -11,6 +11,7 @@ from .serializers import (
     ChangePasswordSerializer, UserUpdateSerializer, AdminUserSerializer,
     GroupSerializer
 )
+from .utils import error_response, success_response, format_serializer_errors
 
 
 class RegisterView(generics.CreateAPIView):
@@ -21,17 +22,24 @@ class RegisterView(generics.CreateAPIView):
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        if not serializer.is_valid():
+            main_message, errors = format_serializer_errors(serializer.errors)
+            return error_response(main_message, errors, status.HTTP_400_BAD_REQUEST)
         
-        # Generate tokens
-        refresh = RefreshToken.for_user(user)
-        
-        return Response({
-            'user': UserSerializer(user).data,
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }, status=status.HTTP_201_CREATED)
+        try:
+            user = serializer.save()
+            
+            # Generate tokens
+            refresh = RefreshToken.for_user(user)
+            
+            return success_response({
+                'user': UserSerializer(user).data,
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, "Registration successful", status.HTTP_201_CREATED)
+            
+        except Exception as e:
+            return error_response(f"Registration failed: {str(e)}", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class LoginView(APIView):
@@ -40,20 +48,27 @@ class LoginView(APIView):
     
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        if not serializer.is_valid():
+            main_message, errors = format_serializer_errors(serializer.errors)
+            return error_response(main_message, errors, status.HTTP_400_BAD_REQUEST)
         
-        # Generate tokens
-        refresh = RefreshToken.for_user(user)
-        
-        # Update last login
-        login(request, user)
-        
-        return Response({
-            'user': UserSerializer(user).data,
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        })
+        try:
+            user = serializer.validated_data['user']
+            
+            # Generate tokens
+            refresh = RefreshToken.for_user(user)
+            
+            # Update last login
+            login(request, user)
+            
+            return success_response({
+                'user': UserSerializer(user).data,
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, "Login successful")
+            
+        except Exception as e:
+            return error_response(f"Login failed: {str(e)}", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class LogoutView(APIView):

@@ -41,14 +41,12 @@ const AdminLoginPage: React.FC = () => {
       return;
     }
 
-    try {
-      await login(credentials);
-      if (rememberMe) {
-        localStorage.setItem('remember_me', 'true');
-      }
-    } catch (error) {
-      console.error('Login failed:', error);
+    const result = await login(credentials);
+    if (result && rememberMe) {
+      localStorage.setItem('remember_me', 'true');
     }
+    // If login was successful, navigation will be handled by useEffect
+    // If it failed, the error will be displayed via the error state from store
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,12 +116,6 @@ const AdminLoginPage: React.FC = () => {
               {t('admin.login.rememberMe')}
             </label>
           </div>
-
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
 
           <button
             type="submit"

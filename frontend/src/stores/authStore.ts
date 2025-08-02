@@ -12,8 +12,8 @@ interface AuthState {
   isInitialized: boolean;
 
   // Actions
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<AuthResponse | null>;
+  register: (data: RegisterData) => Promise<AuthResponse | null>;
   logout: () => Promise<void>;
   loadUser: () => Promise<void>;
   clearError: () => void;
@@ -22,7 +22,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // Initial state
       user: null,
       isAuthenticated: false,
@@ -34,72 +34,70 @@ export const useAuthStore = create<AuthState>()(
       login: async (credentials: LoginCredentials) => {
         console.log('🔑 AuthStore: Starting login process');
         set({ isLoading: true, error: null });
+        
         try {
-          const response: AuthResponse = await authAPI.login(credentials);
-          console.log('🔑 AuthStore: Login API response received');
+          const response = await authAPI.login(credentials);
+          console.log('🔑 AuthStore: Login API response received:', response);
           
-          // Store tokens
-          localStorage.setItem('access_token', response.access);
-          localStorage.setItem('refresh_token', response.refresh);
-          
-          set({
-            user: response.user,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-            isInitialized: true,
-          });
-          console.log('🔑 AuthStore: Login successful, user authenticated');
+          // Check if the response follows our new format
+          if (response.success && response.data) {
+            const authData = response.data;
+            
+            // Store tokens
+            localStorage.setItem('access_token', authData.access);
+            localStorage.setItem('refresh_token', authData.refresh);
+            
+            set({
+              user: authData.user,
+              isAuthenticated: true,
+              isLoading: false,
+              error: null,
+              isInitialized: true,
+            });
+            
+            console.log('🔑 AuthStore: Login successful, user authenticated');
+            
+            // Import flash store dynamically to avoid circular dependency
+            const { useFlashStore } = await import('./flashStore');
+            useFlashStore.getState().showSuccess(response.message || 'Login successful');
+            
+            return authData;
+          } else {
+            // Handle error response
+            const errorMessage = response.message || 'Login failed';
+            set({
+              user: null,
+              isAuthenticated: false,
+              isLoading: false,
+              error: errorMessage,
+              isInitialized: true,
+            });
+            
+            // Show flash error message
+            const { useFlashStore } = await import('./flashStore');
+            useFlashStore.getState().showError(errorMessage);
+            
+            return null;
+          }
         } catch (error: any) {
           console.error('🔑 AuthStore: Login failed:', error);
-          const errorMessage = error.response?.data?.detail || 
-                              error.response?.data?.message || 
-                              'Login failed';
-          set({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-            error: errorMessage,
-            isInitialized: true,
-          });
-          throw error;
-        }
-      },
-
-      register: async (data: RegisterData) => {
-        console.log('📝 AuthStore: Starting registration process');
-        set({ isLoading: true, error: null });
-        try {
-          const response: AuthResponse = await authAPI.register(data);
-          console.log('📝 AuthStore: Registration API response received');
           
-          // Store tokens
-          localStorage.setItem('access_token', response.access);
-          localStorage.setItem('refresh_token', response.refresh);
-          
-          set({
-            user: response.user,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-            isInitialized: true,
-          });
-          console.log('📝 AuthStore: Registration successful, user authenticated');
-        } catch (error: any) {
-          console.error('📝 AuthStore: Registration failed:', error);
-          let errorMessage = 'Registration failed';
+          let errorMessage = 'Login failed';
           
           if (error.response?.data) {
-            const errors = error.response.data;
-            if (typeof errors === 'object') {
-              // Extract field errors
-              const fieldErrors = Object.entries(errors)
-                .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
-                .join('; ');
-              errorMessage = fieldErrors || errorMessage;
-            } else if (typeof errors === 'string') {
-              errorMessage = errors;
+            const errorData = error.response.data;
+            
+            if (errorData.success === false) {
+              // Our new API response format
+              errorMessage = errorData.message || errorMessage;
+            } else if (errorData.detail) {
+              // Old format fallback
+              errorMessage = errorData.detail;
+            } else if (typeof errorData === 'string') {
+              errorMessage = errorData;
             }
+          } else if (error.message) {
+            errorMessage = error.message;
           }
           
           set({
@@ -109,7 +107,109 @@ export const useAuthStore = create<AuthState>()(
             error: errorMessage,
             isInitialized: true,
           });
-          throw error;
+          
+          // Show flash error message
+          const { useFlashStore } = await import('./flashStore');
+          useFlashStore.getState().showError(errorMessage);
+          
+          return null;
+        }
+      },
+
+      register: async (data: RegisterData) => {
+        console.log('📝 AuthStore: Starting registration process');
+        set({ isLoading: true, error: null });
+        
+        try {
+          const response = await authAPI.register(data);
+          console.log('📝 AuthStore: Registration API response received:', response);
+          
+          // Check if the response follows our new format
+          if (response.success && response.data) {
+            const authData = response.data;
+            
+            // Store tokens
+            localStorage.setItem('access_token', authData.access);
+            localStorage.setItem('refresh_token', authData.refresh);
+            
+            set({
+              user: authData.user,
+              isAuthenticated: true,
+              isLoading: false,
+              error: null,
+              isInitialized: true,
+            });
+            
+            console.log('📝 AuthStore: Registration successful, user authenticated');
+            
+            // Import flash store dynamically to avoid circular dependency
+            const { useFlashStore } = await import('./flashStore');
+            useFlashStore.getState().showSuccess(response.message || 'Registration successful');
+            
+            return authData;
+          } else {
+            // Handle error response
+            const errorMessage = response.message || 'Registration failed';
+            set({
+              user: null,
+              isAuthenticated: false,
+              isLoading: false,
+              error: errorMessage,
+              isInitialized: true,
+            });
+            
+            // Show flash error message
+            const { useFlashStore } = await import('./flashStore');
+            useFlashStore.getState().showError(errorMessage);
+            
+            return null;
+          }
+        } catch (error: any) {
+          console.error('📝 AuthStore: Registration failed:', error);
+          
+          let errorMessage = 'Registration failed';
+          
+          if (error.response?.data) {
+            const errorData = error.response.data;
+            
+            if (errorData.success === false) {
+              // Our new API response format
+              errorMessage = errorData.message || errorMessage;
+            } else if (typeof errorData === 'object') {
+              // Old format fallback
+              const fieldErrors = Object.entries(errorData)
+                .filter(([field, _]) => field !== 'password_confirm')
+                .map(([field, messages]) => {
+                  const errorList = Array.isArray(messages) ? messages : [messages];
+                  const fieldName = field === 'username' ? 'Username' :
+                                   field === 'email' ? 'Email' :
+                                   field === 'password' ? 'Password' :
+                                   field === 'first_name' ? 'First Name' :
+                                   field === 'last_name' ? 'Last Name' : field;
+                  return `${fieldName}: ${errorList.join(', ')}`;
+                })
+                .join('; ');
+              errorMessage = fieldErrors || errorMessage;
+            } else if (typeof errorData === 'string') {
+              errorMessage = errorData;
+            }
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          
+          set({
+            user: null,
+            isAuthenticated: false,
+            isLoading: false,
+            error: errorMessage,
+            isInitialized: true,
+          });
+          
+          // Show flash error message
+          const { useFlashStore } = await import('./flashStore');
+          useFlashStore.getState().showError(errorMessage);
+          
+          return null;
         }
       },
 

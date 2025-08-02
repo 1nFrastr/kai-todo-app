@@ -11,12 +11,12 @@ const AdminRegisterPage: React.FC = () => {
   const { register, isAuthenticated, isLoading, error, clearError } = useAuthStore();
   
   const [formData, setFormData] = useState<RegisterData>({
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    password: '',
-    password_confirm: '',
+    username: 'admin',
+    email: 'testusername@example.com',
+    first_name: 'Test',
+    last_name: 'User',
+    password: 'password123',
+    password_confirm: 'password123',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -38,11 +38,9 @@ const AdminRegisterPage: React.FC = () => {
       return;
     }
 
-    try {
-      await register(formData);
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
+    await register(formData);
+    // If registration was successful, navigation will be handled by useEffect
+    // If it failed, the error will be displayed via the error state from store
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,12 +175,6 @@ const AdminRegisterPage: React.FC = () => {
               <span className="field-error">{t('admin.register.passwordMismatch')}</span>
             )}
           </div>
-
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
 
           <button
             type="submit"

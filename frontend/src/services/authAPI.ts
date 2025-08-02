@@ -5,7 +5,7 @@ import type {
   LoginCredentials, 
   RegisterData, 
   ChangePasswordData, 
-  AuthResponse,
+  AuthAPIResponse,
   UserUpdateData,
   AdminUser,
   Group,
@@ -87,14 +87,14 @@ api.interceptors.response.use(
 // Authentication API
 export const authAPI = {
   // Register new user
-  register: async (data: RegisterData): Promise<AuthResponse> => {
-    const response: AxiosResponse<AuthResponse> = await api.post('/auth/register/', data);
+  register: async (data: RegisterData): Promise<AuthAPIResponse> => {
+    const response: AxiosResponse<AuthAPIResponse> = await api.post('/auth/register/', data);
     return response.data;
   },
 
   // Login user
-  login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    const response: AxiosResponse<AuthResponse> = await api.post('/auth/login/', credentials);
+  login: async (credentials: LoginCredentials): Promise<AuthAPIResponse> => {
+    const response: AxiosResponse<AuthAPIResponse> = await api.post('/auth/login/', credentials);
     return response.data;
   },
 
