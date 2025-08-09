@@ -1,180 +1,199 @@
-# kai-todo-app
+# 🤖 AI超级任务助手 - TodoMaster
 
-一个现代化的全栈 Todo List 应用，支持多语言和暗黑模式，使用 Django REST Framework 作为后端，React + TypeScript 作为前端。
+**下一代AI原生的待办事项管理系统**，融合人工智能技术的现代化全栈Todo应用。不仅是简单的任务管理，更是您的智能生产力助手！
 
-## 🚀 功能特性
+## 🎬 功能演示
 
+🔐 **完善的用户系统** - 注册、登录、用户管理一应俱全  
+⚡ **Django + React 全栈架构** - 现代化技术栈，高性能体验
+🛡️ **前端管理系统** - 基于React的现代化管理界面，通过REST API管理数据
+🌍 **多语言支持** - 中英文无缝切换
+🌙 **暗黑模式** - 护眼暗色主题
+📱 **响应式设计** - PC端优化体验
+
+
+### 📋 主应用界面
+![主应用演示](docs/images/app-home.gif)
+*智能化的待办事项管理界面，支持快速添加、编辑和状态切换*
+
+### 🤖 AI智能表单填写
+![AI表单演示](docs/images/ai-form-input.gif)
+*革命性的AI智能填写功能，让创建待办事项变得前所未有的简单*
+
+### 🔧 管理系统
+![管理系统演示](docs/images/admin-home.gif)
+*现代化的前端管理界面，通过REST API轻松管理用户和数据*
+
+## 🚀 强大功能
+
+### 💡 智能化功能
+- 🤖 **AI智能表单填写** - 基于AI技术的智能内容生成
+- 🎯 **智能任务推荐** - 根据用户习惯推荐任务
+- 📊 **数据智能分析** - 任务完成情况智能统计
+
+### 👤 用户管理系统
+- 🔐 **安全注册登录** - JWT认证，安全可靠
+- 👥 **分角色权限控制** - 超级管理员、普通管理员、普通用户多级权限体系
+- 🎛️ **智能菜单路由** - 基于用户角色动态显示菜单和路由权限
+- 📝 **个人资料管理** - 完善的用户信息管理
+- 🛡️ **前端管理界面** - React构建的现代化管理系统
+
+### 📋 待办事项管理
 - ✅ 创建、编辑、删除待办事项
-- ✅ 标记待办事项为完成/未完成
-- ✅ 按状态筛选待办事项（全部/未完成/已完成）
-- ✅ 多语言支持（中文/英文）
-- ✅ 暗黑模式/浅色模式切换
-- ✅ 实时数据同步
-- ✅ 现代化UI设计
-- ✅ PC端优化布局
+- 🎯 标记任务优先级和状态
+- 🔍 智能筛选和搜索功能
+- 📅 任务截止日期管理
+- 📊 任务完成统计分析
+
+### 🎨 用户体验
+- 🌍 **国际化支持** - 中文/英文多语言
+- 🌙 **主题切换** - 浅色/暗黑模式
+- ⚡ **实时同步** - 数据实时更新
+- 📱 **现代化UI** - 简洁美观的界面设计
+
+### 🎭 用户角色
+- **超级管理员 (Superuser)** - 拥有系统最高权限，可管理所有用户和数据
+- **管理员 (Admin)** - 可管理普通用户和待办事项，无法管理其他管理员
+- **普通用户 (User)** - 只能管理自己的待办事项
+
+### 🎛️ 权限控制特性
+- **动态菜单路由** - 根据用户角色自动显示/隐藏菜单项
+- **API权限验证** - 后端接口级别的权限校验
+- **前端路由守卫** - 防止未授权用户访问受限页面
+- **操作权限控制** - 细粒度的CRUD操作权限管理://localhost:5173`
+
+**注意：** 管理系统已完全集成在前端React应用中，通过REST API与后端通信，无需额外的Django Admin后台。
 
 ## 🛠️ 技术栈
 
-### 后端
-- Python 3.13+
-- Django 5.2+
-- Django REST Framework 3.16+
-- SQLite 数据库
-- CORS 支持
+### 🐍 后端技术
+- **Python 3.13+** - 最新稳定版Python
+- **Django 5.2+** - 强大的Web框架
+- **Django REST Framework 3.16+** - API开发利器
+- **SQLite** - 轻量级数据库
+- **JWT认证** - 安全的用户认证
+- **CORS支持** - 跨域资源共享
 
-### 前端
-- React 19+ 
-- TypeScript 5.8+
-- Vite 7+
-- Sass
-- Axios
-- React-i18next (国际化)
+### ⚛️ 前端技术
+- **React 19+** - 最新版本React
+- **TypeScript 5.8+** - 类型安全的JavaScript
+- **Vite 7+** - 极速构建工具
+- **Sass** - 强大的CSS预处理器
+- **Axios** - HTTP客户端
+- **React-i18next** - 国际化解决方案
 
-## 📦 项目结构
+### 🔧 开发工具
+- **pnpm** - 高效的包管理器
+- **ESLint** - 代码质量检查
+- **Prettier** - 代码格式化
+- **Git** - 版本控制
 
-```
-kai-todo-app/
-├── backend/                 # Django 后端
-│   ├── todo/               # Todo 应用
-│   │   ├── models.py       # 数据模型
-│   │   ├── views.py        # API 视图
-│   │   ├── serializers.py  # 序列化器
-│   │   └── urls.py         # URL 路由
-│   ├── todolist_project/   # Django 项目配置
-│   ├── manage.py
-│   └── requirements.txt
-├── frontend/               # React 前端
-│   ├── src/
-│   │   ├── components/     # React 组件
-│   │   ├── services/       # API 服务
-│   │   ├── types/          # TypeScript 类型
-│   │   ├── i18n/          # 国际化配置
-│   │   └── App.tsx
-│   ├── package.json
-│   └── vite.config.ts
-├── .github/
-│   └── copilot-instructions.md  # 项目规范
-├── .gitignore
-└── README.md
-```
-
-## 🔧 安装和运行
+## 快速开始
 
 ### 环境要求
 - Python 3.13+
 - Node.js 18+
 - pnpm
+- Git
 
-### 后端设置
+### 🔧 一键启动
 
-1. 克隆项目：
+1. **克隆项目**
 ```bash
 git clone https://github.com/1nFrastr/kai-todo-app.git
 cd kai-todo-app
 ```
 
-2. 进入后端目录：
+2. **后端设置**
 ```bash
+# 进入后端目录
 cd backend
-```
 
-3. 创建并激活虚拟环境：
-```bash
+# 创建并激活虚拟环境
 python -m venv venv
-source venv/Scripts/activate  # Windows
-# 或
-source venv/bin/activate     # macOS/Linux
-```
+source venv/Scripts/activate  # Windows Git Bash
+# 或 source venv/bin/activate  # macOS/Linux
 
-4. 安装依赖：
-```bash
+# 安装依赖
 pip install -r requirements.txt
-```
 
-5. 运行迁移：
-```bash
+# 数据库迁移
 python manage.py makemigrations
 python manage.py migrate
-```
 
-6. 启动开发服务器：
-```bash
+# 创建超级管理员（可选）
+python manage.py createsuperuser
+
+# 启动后端服务
 python manage.py runserver
 ```
+🌐 后端服务: `http://localhost:8000`
 
-后端将在 `http://localhost:8000` 运行
-
-### 前端设置
-
-1. 进入前端目录：
+3. **前端设置**
 ```bash
+# 进入前端目录
 cd frontend
-```
 
-2. 安装依赖：
-```bash
+# 安装依赖
 pnpm install
-```
 
-3. 启动开发服务器：
-```bash
+# 启动前端服务
 pnpm run dev
 ```
+🎨 前端应用: `http://localhost:5173`
 
-前端将在 `http://localhost:5173` 运行
+4. **访问管理系统（可选）**
+   
+   管理系统已集成在前端应用中，通过管理员账户登录后即可访问管理功能。
 
-## 🌐 API 接口
+🌐 后端API: `http://localhost:8000`
+🎨 前端应用: `http://localhost:5173`
+🌐 管理系统: `http://localhost:5173/admin`
 
-### 待办事项 API
+## 使用指南
 
-| 方法 | 端点 | 描述 |
-|------|------|------|
-| GET | `/api/todos/` | 获取所有待办事项 |
-| POST | `/api/todos/` | 创建新的待办事项 |
-| GET | `/api/todos/{id}/` | 获取特定待办事项 |
-| PUT/PATCH | `/api/todos/{id}/` | 更新待办事项 |
-| DELETE | `/api/todos/{id}/` | 删除待办事项 |
-| PATCH | `/api/todos/{id}/toggle_completed/` | 切换完成状态 |
-| GET | `/api/todos/completed/` | 获取已完成的待办事项 |
-| GET | `/api/todos/pending/` | 获取未完成的待办事项 |
+### 🎯 基本操作
+1. **注册/登录** - 创建您的专属账户
+2. **角色权限** - 根据分配的角色享受不同级别的功能权限
+3. **添加任务** - 使用AI智能填写或手动输入
+4. **管理任务** - 编辑、删除、标记完成状态
+5. **智能筛选** - 按状态、优先级快速筛选
+6. **管理功能** - 管理员可访问用户管理等高级功能
+7. **主题切换** - 随心切换浅色/暗黑模式
+8. **语言切换** - 中英文无缝切换
 
-## 📝 使用说明
+### 🤖 AI功能使用
+- 在添加任务时，点击"AI智能填写"按钮
+- 输入简单描述，AI将自动生成详细的任务内容
+- 支持任务优先级和分类的智能推荐
 
-1. 在表单中输入待办事项的标题和描述
-2. 点击"添加"按钮创建新的待办事项
-3. 点击复选框标记待办事项为完成/未完成
-4. 点击"编辑"按钮修改待办事项
-5. 点击"删除"按钮删除待办事项
-6. 使用顶部的筛选按钮查看不同状态的待办事项
-7. 使用右上角的切换按钮改变语言和主题
+## 🤝 贡献指南
 
-## 🎨 主题和多语言
+我们欢迎所有形式的贡献！请查看 `.github/copilot-instructions.md` 了解详细的开发规范。
 
-### 主题支持
-- 浅色模式（默认）
-- 暗黑模式
-- 主题设置会自动保存到本地存储
-
-### 多语言支持
-- 中文（简体）
-- 英文
-- 语言设置会自动保存到本地存储
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-### 开发规范
-请查看 `.github/copilot-instructions.md` 了解详细的开发规范和要求。
+### 🔧 开发流程
+1. Fork 本项目
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
 
 ## 📄 许可证
 
-MIT License
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
 
-## 🔗 相关链接
+## 🔗 相关资源
 
-- [Django 文档](https://docs.djangoproject.com/)
+- [Django 官方文档](https://docs.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
-- [React 文档](https://react.dev/)
-- [Vite 文档](https://vitejs.dev/)
-- [React-i18next](https://react.i18next.com/)
+- [React 官方文档](https://react.dev/)
+- [Vite 构建工具](https://vitejs.dev/)
+- [TypeScript 手册](https://www.typescriptlang.org/)
+
+---
+
+⭐ 如果这个项目对您有帮助，请给我们一个 Star！
+
+🐛 发现Bug？[提交Issue](https://github.com/1nFrastr/kai-todo-app/issues)
+
+💡 有功能建议？[创建Discussion](https://github.com/1nFrastr/kai-todo-app/discussions)
