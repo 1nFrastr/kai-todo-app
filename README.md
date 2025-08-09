@@ -156,7 +156,9 @@ pnpm run dev
    管理系统已集成在前端应用中，通过管理员账户登录后即可访问管理功能。
 
 🌐 后端API: `http://localhost:8000`
+
 🎨 前端应用: `http://localhost:5173`
+
 🌐 管理系统: `http://localhost:5173/admin`
 
 ## 使用指南
