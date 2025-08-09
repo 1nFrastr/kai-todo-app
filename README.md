@@ -1,5 +1,9 @@
 # 🤖 AI超级任务助手 - TodoMaster
 
+[English README](README.en.md) 
+
+[中文文档](README.md)
+
 **下一代AI原生的待办事项管理系统**，融合人工智能技术的现代化全栈Todo应用。不仅是简单的任务管理，更是您的智能生产力助手！
 
 ## 🎬 功能演示
